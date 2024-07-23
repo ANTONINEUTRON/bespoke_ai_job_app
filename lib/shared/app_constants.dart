@@ -1,0 +1,1 @@
+const RESUME_BOX_NAME = "RESUME_BOX";
