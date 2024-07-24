@@ -20,6 +20,7 @@ class SelectResumeWidget extends StatefulWidget {
 class _SelectResumeWidgetState extends State<SelectResumeWidget> {
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         selectFile();
@@ -28,22 +29,22 @@ class _SelectResumeWidgetState extends State<SelectResumeWidget> {
         borderType: BorderType.RRect,
         radius: Radius.circular(16.sp),
         child: Container(
-          height: 160.sp,
-          width: MediaQuery.of(context).size.width,
+          height: screenSize.height * 0.75,
+          width: screenSize.width,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 Icons.cloud_upload_outlined,
-                size: 24.sp,
+                size: 32.sp,
               ),
               Text(
-                "Format PDF, JPG,PNG",
+                "Add Resume",
                 style: TextStyle(
                   fontSize: 18.sp,
                 ),
               ),
-              const Text("Browse files"),
+              const Text("Supported Format PDF, JPG,PNGs"),
             ],
           ),
         ),

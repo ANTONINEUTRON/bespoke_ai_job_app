@@ -4,7 +4,6 @@ import 'package:bespoke_ai_job_app/features/resume/bloc/resume_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
-import 'package:pdfrx/pdfrx.dart';
 
 class ResumeViewWidget extends StatelessWidget {
   const ResumeViewWidget({
@@ -17,10 +16,10 @@ class ResumeViewWidget extends StatelessWidget {
 
     var filePath = selectedResume!.filePath;
     return filePath.contains("pdf")
-    ?PdfViewer.file(filePath)
-        // ? PDFView(
-        //     filePath: filePath,
-        //   )
+  
+        ? PDFView(
+            filePath: filePath,
+          )
         : InteractiveViewer(
             child: Image.file(
               File(filePath),
