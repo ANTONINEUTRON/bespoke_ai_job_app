@@ -1,11 +1,8 @@
-import 'package:bespoke_ai_job_app/extensions/widget_helpers.dart';
 import 'package:bespoke_ai_job_app/features/resume/bloc/resume_bloc.dart';
 import 'package:bespoke_ai_job_app/features/resume/ui/widgets/resume_ai_insights_widget.dart';
 import 'package:bespoke_ai_job_app/features/resume/ui/widgets/resume_view_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ResumeAnalysisPage extends StatefulWidget {
   const ResumeAnalysisPage({
@@ -34,9 +31,9 @@ class _ResumeAnalysisPageState extends State<ResumeAnalysisPage> {
         appBar: AppBar(
           title: Text(selectedResume!.title),
         ),
-        body: Column(
+        body: const Column(
           children: [
-            const TabBar(
+            TabBar(
               tabs: [
                 Tab(
                   text: "Resume",
@@ -49,13 +46,13 @@ class _ResumeAnalysisPageState extends State<ResumeAnalysisPage> {
               ],
             ),
             Expanded(
-              child: const TabBarView(
+              child: TabBarView(
                 physics: NeverScrollableScrollPhysics(),
                 children: [
                   ResumeViewWidget(),
                   ResumeAIInsightsWidget(),
                 ],
-              ).addSpacing(horizontal: 16.w),
+              ),
             )
           ],
         ),

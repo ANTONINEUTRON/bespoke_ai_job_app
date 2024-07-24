@@ -5,10 +5,9 @@ import 'package:bespoke_ai_job_app/features/resume/bloc/resume_state.dart';
 import 'package:bespoke_ai_job_app/features/resume/data/model/resume_model.dart';
 import 'package:bespoke_ai_job_app/features/resume/data/repository/resume_repository.dart';
 import 'package:bespoke_ai_job_app/shared/utility_functions.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mime/mime.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:pdf_image_renderer/pdf_image_renderer.dart';
 import 'package:pdfx/pdfx.dart';
 import 'package:uuid/uuid.dart';
 
@@ -97,13 +96,15 @@ class ResumeBloc extends Cubit<ResumeState> {
     return _getDocScreenshotsPaths(resume: resume);
   }
 
-  Future<List<String>> _getDocScreenshotsPaths({required ResumeModel resume}) async {
+  Future<List<String>> _getDocScreenshotsPaths(
+      {required ResumeModel resume}) async {
     List<String> listOfImages = [];
 
     final doc = await PdfDocument.openFile(resume.filePath);
 
-    int pageSize = doc.pagesCount;
-    
+// Prevent analysis more than 10 pages of resume
+    int pageSize = doc.pagesCount > 10 ? 10 : doc.pagesCount;
+
     for (int i = 1; i <= pageSize; i++) {
       var page = await doc.getPage(i);
 
@@ -131,5 +132,26 @@ class ResumeBloc extends Cubit<ResumeState> {
     }
 
     return listOfImages;
+  }
+
+  void fetchAiInsights() async {
+    try {
+      emit(
+        state.copyWith(
+          aiInsight: await resumeRepo.generateAiInsight(
+            resume: state.selectedResume!,
+          ),
+        ),
+      );
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+        emit(
+          state.copyWith(
+            errorMessage: "An error occured while querying the AI",
+          ),
+        );
+      }
+    }
   }
 }

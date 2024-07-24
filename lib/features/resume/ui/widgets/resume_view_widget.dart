@@ -16,26 +16,16 @@ class ResumeViewWidget extends StatelessWidget {
     var selectedResume = context.read<ResumeBloc>().state.selectedResume;
 
     var filePath = selectedResume!.filePath;
-    return Column(
-      children: [
-        Text("${selectedResume.screenshots?.length}"),
-        !UtilityFunctions.isAnImage(filePath: filePath)
-            ? Expanded(
-              child: PDFView(
-                  filePath: filePath,
-                  fitPolicy: FitPolicy.BOTH,
-                  onViewCreated: (controller) {
-                    // controller.g
-                  },
-                ),
-            )
-            : InteractiveViewer(
-                child: Image.file(
-                  File(filePath),
-                ),
-              )
-      ],
-    );
+    return !UtilityFunctions.isAnImage(filePath: filePath)
+        ? PDFView(
+            filePath: filePath,
+            fitPolicy: FitPolicy.WIDTH,
+          )
+        : InteractiveViewer(
+            child: Image.file(
+              File(filePath),
+            ),
+          );
   }
 
   
