@@ -10,7 +10,7 @@ class ResumeAIInsightsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var selectedResume = context.read<ResumeBloc>().state.selectedResume;
-
+    print("Rendered AI Insights");
     return Container(
       child: Text("Insights"),
     );

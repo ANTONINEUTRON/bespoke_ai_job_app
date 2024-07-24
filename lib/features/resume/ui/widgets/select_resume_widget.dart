@@ -1,11 +1,7 @@
-import 'dart:io';
 
-import 'package:bespoke_ai_job_app/features/resume/bloc/resume_bloc.dart';
-import 'package:bespoke_ai_job_app/features/resume/ui/pages/resume_analysis_page.dart';
+import 'package:bespoke_ai_job_app/shared/utility_functions.dart';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SelectResumeWidget extends StatefulWidget {
@@ -23,12 +19,12 @@ class _SelectResumeWidgetState extends State<SelectResumeWidget> {
     var screenSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
-        selectFile();
+        UtilityFunctions.selectFile(context);
       },
       child: DottedBorder(
         borderType: BorderType.RRect,
         radius: Radius.circular(16.sp),
-        child: Container(
+        child: SizedBox(
           height: screenSize.height * 0.75,
           width: screenSize.width,
           child: Column(
@@ -52,29 +48,4 @@ class _SelectResumeWidgetState extends State<SelectResumeWidget> {
     );
   }
 
-  void selectFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowedExtensions: ["jpg", "png", "webp", "pdf"],
-      type: FileType.custom,
-    );
-
-    if (result != null) {
-      File file = File(result.files.single.path!);
-
-      //Save File
-      context.read<ResumeBloc>().saveSelectedResume(file: file).then(
-        (value) {
-          Navigator.push(
-            context,
-            ResumeAnalysisPage.route(),
-          );
-        },
-      );
-    } else {
-      // User canceled the picker
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("No file selected"),
-      ));
-    }
-  }
 }

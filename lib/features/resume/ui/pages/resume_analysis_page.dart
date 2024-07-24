@@ -23,7 +23,7 @@ class ResumeAnalysisPage extends StatefulWidget {
 class _ResumeAnalysisPageState extends State<ResumeAnalysisPage> {
   @override
   Widget build(BuildContext context) {
-    var selectedResume = context.read<ResumeBloc>().state.selectedResume;
+    var selectedResume = context.watch<ResumeBloc>().state.selectedResume;
     if (selectedResume == null) {
       Navigator.pop(context);
     }
