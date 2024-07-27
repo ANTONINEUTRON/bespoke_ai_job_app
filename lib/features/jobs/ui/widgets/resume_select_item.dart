@@ -22,7 +22,7 @@ class ResumeSelectItem extends StatelessWidget {
         // call function to pass resume and job to AI
         context.read<JobsBloc>().generateAiInsight(resume: resumeModel);
 
-// Show the modal for holding AI response
+        // Show the modal for holding AI response
         showModalBottomSheet(
           context: context,
           isScrollControlled: true,

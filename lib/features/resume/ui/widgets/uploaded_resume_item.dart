@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bespoke_ai_job_app/features/resume/bloc/resume_bloc.dart';
 import 'package:bespoke_ai_job_app/features/resume/data/model/resume_model.dart';
 import 'package:bespoke_ai_job_app/features/resume/ui/pages/resume_analysis_page.dart';
@@ -29,14 +31,27 @@ class UploadedResumeItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.sp),
         ),
         child: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 8.sp,
-            vertical: 8.sp,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // padding: EdgeInsets.symmetric(
+          //   horizontal: 8.sp,
+          //   vertical: 8.sp,
+          // ),
+          height: MediaQuery.of(context).size.height * 0.2,
+          width: MediaQuery.of(context).size.width,
+          // decoration: resume.screenshots == null
+          //     ? null
+          //     : BoxDecoration(
+          //         image: DecorationImage(
+          //           image: FileImage(
+          //             File(resume.screenshots!.first),
+          //           ),
+          //           fit: BoxFit.fitWidth
+          //         ),
+          //       ),
+          child: Stack(
             children: [
-              Flexible(
+              Positioned(
+                bottom: 8.h,
+                left: 8.w,
                 child: Text(
                   resume.title,
                   style: TextStyle(
@@ -46,12 +61,24 @@ class UploadedResumeItem extends StatelessWidget {
                   ),
                 ),
               ),
-              CloseButton(
-                onPressed: () {
-                  context.read<ResumeBloc>().removeResume(resume: resume);
-                },
-                color: Colors.white,
-              )
+              Align(
+                alignment: Alignment.topRight,
+                child: CloseButton(
+                  onPressed: () {
+                    context.read<ResumeBloc>().removeResume(resume: resume);
+                  },
+                  color: Colors.white,
+                ),
+              ),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: Image.file(
+                  opacity: const AlwaysStoppedAnimation(0.17),
+                  File(resume.screenshots!.first),
+                ),
+              ),
             ],
           ),
         ),

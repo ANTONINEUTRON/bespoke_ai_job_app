@@ -15,10 +15,10 @@ class _HomePageState extends State<HomePage> {
   int index = 0;
 
   final _listOfPages = [
-    const HomeView(),
+    // const HomeView(),
     const ResumePage(),
     const JobsPage(),
-    const ProfilePage(),
+    // const ProfilePage(),
   ];
 
   @override
@@ -41,18 +41,18 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.home_outlined),
             label: "Home",
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.description_outlined),
-            label: "Resume",
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.description_outlined),
+          //   label: "Resume",
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.credit_card),
             label: "My Jobs",
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: "Profile",
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.person),
+          //   label: "Profile",
+          // ),
         ],
       ),
     );

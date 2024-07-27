@@ -16,22 +16,37 @@ class ResumePage extends StatelessWidget {
     List<ResumeModel> listOfResume = context.watch<ResumeBloc>().state.resumes;
 
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text("Resume"),
-        centerTitle: true,
-      ),
-      body: ListView(
-        padding: EdgeInsets.all(16.sp),
-        children: [
-          if (listOfResume.isNotEmpty)
-            ...listOfResume.map(
-              (resume) => UploadedResumeItem(
-                resume: resume,
-              ).addSpacing(bottom: 4.h),
-            ),
-          if (listOfResume.isEmpty) const SelectResumeWidget(),
-        ],
+      // appBar: AppBar(
+      //   automaticallyImplyLeading: false,
+      //   title: const Text("Resume"),
+      //   centerTitle: true,
+      // ),
+      body: SafeArea(
+        child: ListView(
+          padding: EdgeInsets.all(16.sp),
+          children: [
+            if (listOfResume.isNotEmpty)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Hello! \nAccess & manage your resume here",
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                    ),
+                  ).addSpacing(
+                    bottom: 18.h,
+                  ),
+                  ...listOfResume.map(
+                    (resume) => UploadedResumeItem(
+                      resume: resume,
+                    ).addSpacing(bottom: 4.h),
+                  ),
+                ],
+              ),
+            if (listOfResume.isEmpty) const SelectResumeWidget(),
+          ],
+        ),
       ),
       floatingActionButton: listOfResume.isEmpty
           ? null

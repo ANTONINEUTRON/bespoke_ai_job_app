@@ -16,14 +16,16 @@ class JobItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card.filled(
+    return Card(
+      color: Theme.of(context).colorScheme.primary,
+      elevation: 10,
       child: ListTile(
         title: Text(
           job.description,
           maxLines: 2,
           style: TextStyle(
             fontSize: 18.sp,
-            color: Colors.black,
+            color: Colors.white,
           ),
           overflow: TextOverflow.ellipsis,
         ),

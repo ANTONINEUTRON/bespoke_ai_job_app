@@ -1,5 +1,4 @@
 import 'package:bespoke_ai_job_app/features/jobs/blocs/jobs_bloc.dart';
-import 'package:bespoke_ai_job_app/features/jobs/data/model/job.dart';
 import 'package:bespoke_ai_job_app/features/jobs/ui/pages/add_job_page.dart';
 import 'package:bespoke_ai_job_app/features/jobs/ui/widgets/job_item.dart';
 import 'package:flutter/material.dart';
@@ -14,17 +13,23 @@ class JobsPage extends StatelessWidget {
     var jobs = context.watch<JobsBloc>().state.jobs;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("My Jobs"),
-      ),
-      body: ListView(
-        padding: EdgeInsets.all(16.sp),
-        children: [
-          const Text("Discover Your Fit In order to find your next job"),
-          ...jobs.map(
-            (job) => JobItem(job: job,),
-          ),
-        ],
+      body: SafeArea(
+        child: ListView(
+          padding: EdgeInsets.all(16.sp),
+          children: [
+             Text(
+              "How well do you fit the Job?\nFind out!",
+              style: TextStyle(
+                fontSize: 18.sp,
+              ),
+            ),
+            ...jobs.map(
+              (job) => JobItem(
+                job: job,
+              ),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
