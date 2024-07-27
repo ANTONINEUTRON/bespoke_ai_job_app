@@ -1,3 +1,5 @@
+import 'package:bespoke_ai_job_app/features/jobs/blocs/jobs_bloc.dart';
+import 'package:bespoke_ai_job_app/features/jobs/data/model/job.dart';
 import 'package:bespoke_ai_job_app/shared/app_constants.dart';
 import 'package:bespoke_ai_job_app/features/home/ui/pages/home_page.dart';
 import 'package:bespoke_ai_job_app/features/resume/bloc/resume_bloc.dart';
@@ -14,8 +16,10 @@ void main() async {
   await Hive.initFlutter();
   //TypeID 1
   Hive.registerAdapter(ResumeModelImplAdapter());
+  Hive.registerAdapter(JobImplAdapter());
 
-  await Hive.openBox<ResumeModel>(RESUME_BOX_NAME);
+  await Hive.openBox<ResumeModel>(AppConstants.RESUME_BOX_NAME);
+  await Hive.openBox<Job>(AppConstants.JOB_BOX_NAME);
   
   runApp(const MyApp());
 
@@ -37,11 +41,15 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => ResumeBloc(),
         ),
+        BlocProvider(
+          create: (context) => JobsBloc(),
+        ),
       ],
       child: MaterialApp(
         title: 'Bespoke',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: const Color(0XFF092C4C)),
+          // primaryColor: Colors.teal,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal,primary: Colors.teal),
           useMaterial3: true,
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             selectedItemColor: Color(0XFF092C4C),
@@ -52,6 +60,8 @@ class MyApp extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4.sp),
               ),
+              backgroundColor: Colors.teal,
+              foregroundColor: Colors.white,
             ),
           ),
         ),

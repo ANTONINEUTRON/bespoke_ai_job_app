@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:bespoke_ai_job_app/gen/env.dart';
 import 'package:bespoke_ai_job_app/shared/app_constants.dart';
 import 'package:bespoke_ai_job_app/features/resume/data/model/resume_model.dart';
 import 'package:bespoke_ai_job_app/shared/utility_functions.dart';
@@ -9,9 +7,7 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class ResumeRepository {
-  var resumeBox = Hive.box<ResumeModel>(RESUME_BOX_NAME);
-  final _model =
-      GenerativeModel(model: 'gemini-1.5-flash', apiKey: Env.geminiKey);
+  var resumeBox = Hive.box<ResumeModel>(AppConstants.RESUME_BOX_NAME);
 
   Future<String> saveFile({required File file}) async {
     return UtilityFunctions.saveFile(
@@ -61,9 +57,8 @@ class ResumeRepository {
 
     //prepare prompt
     var prompt = TextPart("Attached are image of a resume, review it");
-    print("Data Part SIze");
-    print(dataparts.length);
-    final response = await _model.generateContent([
+    
+    final response = await AppConstants.GEMINI.generateContent([
       Content.multi([
         ...dataparts,
         prompt,
