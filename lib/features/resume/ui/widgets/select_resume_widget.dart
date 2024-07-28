@@ -17,31 +17,33 @@ class _SelectResumeWidgetState extends State<SelectResumeWidget> {
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
-    return GestureDetector(
-      onTap: () {
-        UtilityFunctions.selectFile(context);
-      },
-      child: DottedBorder(
-        borderType: BorderType.RRect,
-        radius: Radius.circular(16.sp),
-        child: SizedBox(
-          height: screenSize.height * 0.75,
-          width: screenSize.width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.cloud_upload_outlined,
-                size: 32.sp,
-              ),
-              Text(
-                "Add Resume",
-                style: TextStyle(
-                  fontSize: 18.sp,
+    return Center(
+      child: GestureDetector(
+        onTap: () {
+          UtilityFunctions.selectFile(context);
+        },
+        child: DottedBorder(
+          borderType: BorderType.RRect,
+          radius: Radius.circular(16.sp),
+          child: SizedBox(
+            height: screenSize.height * 0.85,
+            width: screenSize.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.cloud_upload_outlined,
+                  size: 32.sp,
                 ),
-              ),
-              const Text("Supported Format PDF, JPG,PNGs"),
-            ],
+                Text(
+                  "Add Resume",
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                  ),
+                ),
+                const Text("Supported Format PDF, JPG,PNGs"),
+              ],
+            ),
           ),
         ),
       ),

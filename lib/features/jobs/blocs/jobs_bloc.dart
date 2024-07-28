@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:bespoke_ai_job_app/features/jobs/blocs/jobs_state.dart';
 import 'package:bespoke_ai_job_app/features/jobs/data/model/job.dart';
 import 'package:bespoke_ai_job_app/features/jobs/data/repository/job_repository.dart';
 import 'package:bespoke_ai_job_app/features/resume/data/model/resume_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class JobsBloc extends Cubit<JobsState> {
@@ -15,7 +18,7 @@ class JobsBloc extends Cubit<JobsState> {
     // save to db
     await _jobRepository.saveJob(job);
 
-    emit(state.copyWith(job: job));
+    emit(state.copyWith(job: job,));
 
     fetchAllJobs();
   }
@@ -33,10 +36,14 @@ class JobsBloc extends Cubit<JobsState> {
   /// This function generate ai insight on the user resume in relation to the Job posted
   /// the job has been set and saved in this state already
   void generateAiInsight({required ResumeModel resume}) async {
+    emit(
+      state.copyWith(aiInsight: null),
+    );
     try {
       String aiInsight = await _jobRepository.getAiResponse(
         job: state.job!,
         resume: resume,
+        
       );
 
       emit(
@@ -46,6 +53,18 @@ class JobsBloc extends Cubit<JobsState> {
       emit(
         state.copyWith(
             errorMsg: "An error occured while generating job insight"),
+      );
+      if (kDebugMode) {
+        print(e);
+      }
+
+      Timer(
+        const Duration(seconds: 10),
+        () => emit(
+          state.copyWith(
+            errorMsg: null,
+          ),
+        ),
       );
     }
   }

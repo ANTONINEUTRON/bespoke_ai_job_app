@@ -22,14 +22,18 @@ class ResumeSelectItem extends StatelessWidget {
         // call function to pass resume and job to AI
         context.read<JobsBloc>().generateAiInsight(resume: resumeModel);
 
-        // Show the modal for holding AI response
-        showModalBottomSheet(
-          context: context,
-          isScrollControlled: true,
-          builder: (context) {
-            return const JobAiInsightsView();
-          },
+        // Show the AI response
+        Navigator.push(
+          context,
+          JobAiInsightsView.route(),
         );
+        // showModalBottomSheet(
+        //   context: context,
+        //   isScrollControlled: true,
+        //   builder: (context) {
+        //     return const JobAiInsightsView();
+        //   },
+        // );
       },
       child: Card.outlined(
         child: ListTile(

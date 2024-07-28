@@ -24,6 +24,7 @@ class JobsPage extends StatelessWidget {
       label: const Text("New Job"),
       icon: const Icon(Icons.add),
     );
+    
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -41,14 +42,16 @@ class JobsPage extends StatelessWidget {
                             fontSize: 18.sp,
                           ),
                         ).addSpacing(bottom: 18.h),
-                        IconButton(
-                          onPressed: () {
+                        GestureDetector(
+                          onTap: () {
                             showSearch(
                               context: context,
                               delegate: JobSearchDelegate(jobs),
                             );
                           },
-                          icon: const Icon(Icons.search),
+                          child: CircleAvatar(
+                            child: const Icon(Icons.search),
+                          ),
                         ),
                       ],
                     ),
@@ -61,7 +64,7 @@ class JobsPage extends StatelessWidget {
                 )
               //
               //
-              : Container(
+              : SizedBox(
                   height: MediaQuery.of(context).size.height * 0.9,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

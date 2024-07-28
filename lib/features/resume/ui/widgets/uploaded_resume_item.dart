@@ -17,70 +17,63 @@ class UploadedResumeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        context.read<ResumeBloc>().setSelectedResume(resume: resume).then(
-          (value) {
-            Navigator.push(context, ResumeAnalysisPage.route());
-          },
-        );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
-          borderRadius: BorderRadius.circular(16.sp),
-        ),
-        child: Container(
-          // padding: EdgeInsets.symmetric(
-          //   horizontal: 8.sp,
-          //   vertical: 8.sp,
-          // ),
-          height: MediaQuery.of(context).size.height * 0.2,
-          width: MediaQuery.of(context).size.width,
-          // decoration: resume.screenshots == null
-          //     ? null
-          //     : BoxDecoration(
-          //         image: DecorationImage(
-          //           image: FileImage(
-          //             File(resume.screenshots!.first),
-          //           ),
-          //           fit: BoxFit.fitWidth
-          //         ),
-          //       ),
-          child: Stack(
-            children: [
-              Positioned(
-                bottom: 8.h,
-                left: 8.w,
-                child: Text(
-                  resume.title,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18.sp,
-                  ),
-                ),
+    ResumeBloc resumeBloc = context.watch<ResumeBloc>();
+
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primary,
+        borderRadius: BorderRadius.circular(16.sp),
+      ),
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.2,
+        width: MediaQuery.of(context).size.width,
+        child: Stack(
+          children: [
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: GestureDetector(
+                onTap: () {
+                  resumeBloc.setSelectedResume(resume: resume).then(
+                    (value) {
+                      Navigator.push(context, ResumeAnalysisPage.route());
+                    },
+                  );
+                },
+                child: resume.screenshots == null
+                    ? SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.2,
+                        width: MediaQuery.of(context).size.width,
+                      )
+                    : Image.file(
+                        opacity: const AlwaysStoppedAnimation(0.17),
+                        File(resume.screenshots!.first),
+                      ),
               ),
-              Align(
-                alignment: Alignment.topRight,
-                child: CloseButton(
-                  onPressed: () {
-                    context.read<ResumeBloc>().removeResume(resume: resume);
-                  },
+            ),
+            Positioned(
+              bottom: 8.h,
+              left: 8.w,
+              child: Text(
+                resume.title,
+                style: TextStyle(
                   color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18.sp,
                 ),
               ),
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                child: Image.file(
-                  opacity: const AlwaysStoppedAnimation(0.17),
-                  File(resume.screenshots!.first),
-                ),
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: CloseButton(
+                onPressed: () {
+                  resumeBloc.removeResume(resume: resume);
+                },
+                color: Colors.white,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

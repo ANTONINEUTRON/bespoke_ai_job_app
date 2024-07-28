@@ -4,63 +4,51 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class JobAiInsightsView extends StatelessWidget {
+class JobAiInsightsView extends StatefulWidget {
   const JobAiInsightsView({super.key});
 
   @override
+  State<JobAiInsightsView> createState() => _JobAiInsightsViewState();
+
+  static route() => MaterialPageRoute(
+        builder: (context) => const JobAiInsightsView(),
+      );
+}
+
+class _JobAiInsightsViewState extends State<JobAiInsightsView> {
+  @override
   Widget build(BuildContext context) {
-    var state = context.watch<JobsBloc>().state;
+    var bloc = context.watch<JobsBloc>();
+    var state = bloc.state;
     String? aiInsight = state.aiInsight;
 
     if (state.errorMsg != null) {
       Navigator.pop(context);
     }
+    print("REBUILDDD");
+    print("REBUILDDD");
+    print("REBUILDDD");
 
-    return aiInsight == null
-        ? const Center(
-            child: CircularProgressIndicator(),
-          )
-        : Scaffold(
-            appBar: AppBar(
-              leading: const CloseButton(),
-              title: Text(
-                "Job Analysis Result",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.sp,
-                ),
-              ),
-              centerTitle: true,
+    return Scaffold(
+      appBar: AppBar(
+        leading: const CloseButton(),
+        title: Text(
+          "Job Analysis Result",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20.sp,
+          ),
+        ),
+        centerTitle: true,
+      ),
+      body: aiInsight == null
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : Markdown(
+              selectable: true,
+              data: aiInsight,
             ),
-            body: Stack(
-              children: [
-                Positioned(
-                  top: 4.h,
-                  right: 0,
-                  left: 0,
-                  bottom: 50.h,
-                  child: Column(
-                    // padding: EdgeInsets.symmetric(horizontal: 16.sp),
-                    children: [
-                      Expanded(
-                        child: Markdown(
-                          selectable: true,
-                          data: aiInsight,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                    right: 8,
-                    left: 8,
-                    bottom: 0,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: const Text("Generate another response"),
-                    ))
-              ],
-            ),
-          );
+    );
   }
 }
