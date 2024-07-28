@@ -9,7 +9,12 @@ class JobAiInsightsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? aiInsight = context.watch<JobsBloc>().state.aiInsight;
+    var state = context.watch<JobsBloc>().state;
+    String? aiInsight = state.aiInsight;
+
+    if (state.errorMsg != null) {
+      Navigator.pop(context);
+    }
 
     return aiInsight == null
         ? const Center(
@@ -37,7 +42,12 @@ class JobAiInsightsView extends StatelessWidget {
                   child: Column(
                     // padding: EdgeInsets.symmetric(horizontal: 16.sp),
                     children: [
-                      Expanded(child: Markdown(data: aiInsight)),
+                      Expanded(
+                        child: Markdown(
+                          selectable: true,
+                          data: aiInsight,
+                        ),
+                      ),
                     ],
                   ),
                 ),

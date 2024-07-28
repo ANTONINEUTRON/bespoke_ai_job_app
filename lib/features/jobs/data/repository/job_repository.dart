@@ -38,7 +38,7 @@ class JobRepository {
 
     //prepare prompt
     var prompt = TextPart(
-        "This is a Job posting ${job.description} provide insight if I am applying with the resume attached in the image");
+        "This is a Job posting ${job.description} provide insight and if possible a cover letter if I am applying with the resume attached in the image");
 
     final response = await AppConstants.GEMINI.generateContent([
       Content.multi([

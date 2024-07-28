@@ -20,6 +20,7 @@ class JobItem extends StatelessWidget {
       color: Theme.of(context).colorScheme.primary,
       elevation: 10,
       child: ListTile(
+        contentPadding: const EdgeInsets.all(8),
         title: Text(
           job.description,
           maxLines: 2,
@@ -33,8 +34,10 @@ class JobItem extends StatelessWidget {
           DateFormat.yMMMEd().format(
             job.date ?? DateTime.now(),
           ),
+          style: const TextStyle(color: Colors.white,fontStyle: FontStyle.italic),
         ),
         trailing: CloseButton(
+          color: Colors.white,
           onPressed: () {
             context.read<JobsBloc>().deleteJob(job);
           },

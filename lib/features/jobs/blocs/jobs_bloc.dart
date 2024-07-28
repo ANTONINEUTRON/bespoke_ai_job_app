@@ -15,6 +15,8 @@ class JobsBloc extends Cubit<JobsState> {
     // save to db
     await _jobRepository.saveJob(job);
 
+    emit(state.copyWith(job: job));
+
     fetchAllJobs();
   }
 
@@ -31,13 +33,22 @@ class JobsBloc extends Cubit<JobsState> {
   /// This function generate ai insight on the user resume in relation to the Job posted
   /// the job has been set and saved in this state already
   void generateAiInsight({required ResumeModel resume}) async {
-    String aiInsight = await _jobRepository.getAiResponse(
-      job: state.job!,
-      resume: resume,
-    );
+    try {
+      String aiInsight = await _jobRepository.getAiResponse(
+        job: state.job!,
+        resume: resume,
+      );
 
-    emit(
-      state.copyWith(aiInsight: aiInsight),
-    );
+      emit(
+        state.copyWith(aiInsight: aiInsight),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+            errorMsg: "An error occured while generating job insight"),
+      );
+    }
   }
+
+  void reset() => emit(JobsState(jobs: state.jobs));
 }

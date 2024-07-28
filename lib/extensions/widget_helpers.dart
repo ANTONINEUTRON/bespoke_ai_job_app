@@ -10,17 +10,6 @@ extension WidgetHelpers on Widget {
     double? horizontal,
     double? vertical,
   }) {
-    assert(
-      (left == null && right == null && top == null && bottom == null) ||
-          (horizontal == null && vertical == null),
-      'If left, right, top, or bottom are provided, horizontal and vertical must be null, and vice versa',
-    );
-    assert(
-      (horizontal == null && vertical == null) ||
-          (left == null && right == null && top == null && bottom == null),
-      'If horizontal or vertical are provided, left, right, top, and bottom must be null, and vice versa',
-    );
-
     EdgeInsets padding;
     if (left != null || right != null || top != null || bottom != null) {
       padding = EdgeInsets.only(

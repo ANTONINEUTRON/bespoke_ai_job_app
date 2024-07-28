@@ -1,3 +1,4 @@
+import 'package:bespoke_ai_job_app/extensions/widget_helpers.dart';
 import 'package:bespoke_ai_job_app/features/jobs/ui/widgets/resume_select_item.dart';
 import 'package:bespoke_ai_job_app/features/resume/bloc/resume_bloc.dart';
 import 'package:bespoke_ai_job_app/shared/utility_functions.dart';
@@ -18,7 +19,12 @@ class SelectResumeView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text("Select the resume you want to apply with"),
+          Text(
+            "Select the resume you want to apply with",
+            style: Theme.of(context).textTheme.bodyLarge,
+          ).addSpacing(
+            vertical: 16.h,
+          ),
           // const CloseButton(),
           ...listfResume.map(
             (resume) => ResumeSelectItem(

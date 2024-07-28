@@ -1,7 +1,7 @@
 import 'package:bespoke_ai_job_app/features/jobs/blocs/jobs_bloc.dart';
 import 'package:bespoke_ai_job_app/features/jobs/data/model/job.dart';
 import 'package:bespoke_ai_job_app/shared/app_constants.dart';
-import 'package:bespoke_ai_job_app/features/home/ui/pages/home_page.dart';
+import 'package:bespoke_ai_job_app/features/home/pages/home_page.dart';
 import 'package:bespoke_ai_job_app/features/resume/bloc/resume_bloc.dart';
 import 'package:bespoke_ai_job_app/features/resume/data/model/resume_model.dart';
 import 'package:flutter/material.dart';
