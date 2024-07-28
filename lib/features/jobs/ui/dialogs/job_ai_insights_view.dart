@@ -25,9 +25,6 @@ class _JobAiInsightsViewState extends State<JobAiInsightsView> {
     if (state.errorMsg != null) {
       Navigator.pop(context);
     }
-    print("REBUILDDD");
-    print("REBUILDDD");
-    print("REBUILDDD");
 
     return Scaffold(
       appBar: AppBar(
