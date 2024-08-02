@@ -1,4 +1,5 @@
 import 'package:bespoke_ai_job_app/features/jobs/ui/pages/jobs_page.dart';
+import 'package:bespoke_ai_job_app/features/profile/ui/pages/profile_page.dart';
 import 'package:bespoke_ai_job_app/features/resume/ui/pages/resume_page.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,7 @@ class _HomePageState extends State<HomePage> {
   final _listOfPages = [
     const ResumePage(),
     const JobsPage(),
+    const ProfilePage(),
   ];
 
   @override
@@ -40,6 +42,10 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.credit_card),
             label: "My Jobs",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_2),
+            label: "Profile",
           ),
         ],
       ),
