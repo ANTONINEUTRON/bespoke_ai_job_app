@@ -1,7 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'edit_profile_page.dart';
+import 'change_password_page.dart';
+//import 'login_page.dart'; // Import LoginPage
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
+
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  String _name = 'Jane Doe';
+  String _phoneNumber = '+234 9123456789';
+
+  void _updateProfile(Map<String, String> updatedData) {
+    setState(() {
+      _name = updatedData['name']!;
+      _phoneNumber = updatedData['phone']!;
+    });
+  }
+
+  Future<void> _logout() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      Navigator.pushReplacementNamed(context, '/login');
+    } catch (e) {
+      // Handle the error if necessary
+      print("Error logging out: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +63,15 @@ class ProfilePage extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        const Text(
-                          'Jane Doe',
-                          style: TextStyle(
+                        Text(
+                          _name,
+                          style: const TextStyle(
                             fontSize: 24.0,
                             color: Colors.white,
                           ),
                         ),
                         Text(
-                          '+234 9123456789',
+                          _phoneNumber,
                           style: TextStyle(
                             fontSize: 18.0,
                             color: Colors.white.withOpacity(0.8),
@@ -84,43 +113,54 @@ class ProfilePage extends StatelessWidget {
                     'assets/person.png',
                     'Edit profile',
                         () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditProfilePage(
+                            name: _name,
+                            phoneNumber: _phoneNumber,
+                            onSave: _updateProfile,
+                          ),
+                        ),
+                      );
                     },
                   ),
                   _buildDivider(),
                   _buildListTileWithSpacing(
-                    'assets/credit_card.png',
-                    'Payments',
+                    'assets/change_password.png',
+                    'Change password',
                         () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ChangePasswordPage(),
+                        ),
+                      );
                     },
                   ),
                   _buildDivider(),
                   _buildListTileWithSpacing(
-                    'assets/Frame.png',
-                    'My activities',
-                        () {
-                    },
+                    'assets/Feedback.png',
+                    'Feedback',
+                        () {},
                   ),
                   _buildDivider(),
                   _buildListTileWithSpacing(
                     'assets/settings.png',
                     'Settings',
-                        () {
-
-                    },
+                        () {},
                   ),
                   _buildDivider(),
                   _buildListTileWithSpacing(
                     'assets/help.png',
                     'Help center',
-                        () {
-                    },
+                        () {},
                   ),
                   _buildDivider(),
                   _buildListTileWithSpacing(
                     'assets/logout.png',
                     'Logout',
-                        () {
-                    },
+                    _logout,
                   ),
                 ],
               ),
@@ -134,24 +174,22 @@ class ProfilePage extends StatelessWidget {
   Widget _buildListTileWithSpacing(String assetPath, String title, VoidCallback onTap) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Container(
-        child: ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
-          leading: Container(
-            width: 48,
-            height: 48,
-            child: Center(
-              child: Image.asset(
-                assetPath,
-                width: 24,
-                height: 24,
-              ),
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+        leading: Container(
+          width: 48,
+          height: 48,
+          child: Center(
+            child: Image.asset(
+              assetPath,
+              width: 24,
+              height: 24,
             ),
           ),
-          title: Text(title),
-          trailing: const Icon(Icons.arrow_forward_ios),
-          onTap: onTap,
         ),
+        title: Text(title),
+        trailing: const Icon(Icons.arrow_forward_ios),
+        onTap: onTap,
       ),
     );
   }
