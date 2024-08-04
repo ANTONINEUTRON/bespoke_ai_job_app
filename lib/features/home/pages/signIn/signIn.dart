@@ -46,10 +46,10 @@ class _SignInState extends State<SignIn> {
                 fontSize: 18, 
                 fontWeight: FontWeight.w500),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
        
               SignInForm(),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               
               
              Row(
