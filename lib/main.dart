@@ -1,3 +1,5 @@
+import 'package:bespoke_ai_job_app/features/home/pages/signIn/signIn.dart';
+import 'package:bespoke_ai_job_app/features/home/pages/signUp/signUp.dart';
 import 'package:bespoke_ai_job_app/features/jobs/blocs/jobs_bloc.dart';
 import 'package:bespoke_ai_job_app/features/jobs/data/model/job.dart';
 import 'package:bespoke_ai_job_app/shared/app_constants.dart';
@@ -66,7 +68,10 @@ class MyApp extends StatelessWidget {
           ),
         ),
         debugShowCheckedModeBanner: false,
-        home: const HomePage(),
+        home: const SignIn(),
+        // routes: {
+        //   '/signup':(context) => const SignUpForm(),
+        // }
       ),
     );
   }
