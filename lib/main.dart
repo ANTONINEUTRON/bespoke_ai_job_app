@@ -1,9 +1,10 @@
+import 'package:bespoke_ai_job_app/features/home/pages/signIn/signIn.dart';
 import 'package:bespoke_ai_job_app/features/jobs/blocs/jobs_bloc.dart';
 import 'package:bespoke_ai_job_app/features/jobs/data/model/job.dart';
 import 'package:bespoke_ai_job_app/shared/app_constants.dart';
-import 'package:bespoke_ai_job_app/features/home/pages/home_page.dart';
 import 'package:bespoke_ai_job_app/features/resume/bloc/resume_bloc.dart';
 import 'package:bespoke_ai_job_app/features/resume/data/model/resume_model.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,6 +21,7 @@ void main() async {
 
   await Hive.openBox<ResumeModel>(AppConstants.RESUME_BOX_NAME);
   await Hive.openBox<Job>(AppConstants.JOB_BOX_NAME);
+  await Firebase.initializeApp();
   
   runApp(const MyApp());
 
@@ -66,7 +68,8 @@ class MyApp extends StatelessWidget {
           ),
         ),
         debugShowCheckedModeBanner: false,
-        home: const HomePage(),
+        home: const SignIn(),
+        
       ),
     );
   }
