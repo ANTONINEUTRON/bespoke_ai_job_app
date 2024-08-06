@@ -65,7 +65,7 @@ class _SignInState extends State<SignIn> {
                     child: Text(
                       'Or continue with',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 17,
                       ),
                     ),
                   ),
