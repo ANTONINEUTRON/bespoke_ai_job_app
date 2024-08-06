@@ -1,6 +1,5 @@
 import 'package:bespoke_ai_job_app/features/home/pages/signIn/signInForm.dart';
 import 'package:bespoke_ai_job_app/features/home/pages/signUp/signUp.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -22,7 +21,7 @@ class _SignInState extends State<SignIn> {
         ),
         elevation: 0,
         backgroundColor: Colors.transparent,
-       title:  Text(
+        title:  Text(
           'Welcome back!',
           style: 
           TextStyle(
@@ -32,13 +31,13 @@ class _SignInState extends State<SignIn> {
       ),
 
       
-     body:  SingleChildScrollView(
-       child: Padding(
+      body:  SingleChildScrollView(
+      child: Padding(
         padding:  EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-           
+          
             Text(
                 'Login to your account',
                 style: TextStyle(
@@ -109,9 +108,9 @@ class _SignInState extends State<SignIn> {
                   ),
                 ],
               ),
-       
-               SizedBox(height: 10),
-       
+      
+              SizedBox(height: 10),
+    
               Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -135,11 +134,11 @@ class _SignInState extends State<SignIn> {
                 ),
               ),
               SizedBox(height: 10),
-       ],
-       
+      ],
+      
         ),
         ),
-     ), 
+    ), 
     );
   }
 }

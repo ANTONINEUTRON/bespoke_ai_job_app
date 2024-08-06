@@ -1,4 +1,3 @@
-import 'package:bespoke_ai_job_app/features/home/pages/signIn/signIn.dart';
 import 'package:bespoke_ai_job_app/features/jobs/ui/pages/jobs_page.dart';
 import 'package:bespoke_ai_job_app/features/profile/ui/pages/profile_page.dart';
 import 'package:bespoke_ai_job_app/features/resume/ui/pages/resume_page.dart';

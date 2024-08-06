@@ -1,5 +1,5 @@
 import 'package:bespoke_ai_job_app/features/home/pages/signIn/signIn.dart';
-import 'package:flutter/foundation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,19 +14,38 @@ class SignupController extends ChangeNotifier {
 
   Future<void> signup(BuildContext context, String name, String email,
       String password, String confirmPassword) async {
+    if (password != confirmPassword) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Passwords do not match')),
+      );
+      return;
+    }
+
     setLoading(true);
 
-    
-    await Future.delayed(Duration(seconds: 2));
+    try {
+      // Sign up with Firebase Auth
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
 
-    
+      // Optionally, you can update the user's profile with their name
+      await userCredential.user!.updateProfile(displayName: name);
 
-    setLoading(false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Signup successful')),
+      );
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => SignIn()),
-    );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => SignIn()),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${e.toString()}')),
+      );
+    } finally {
+      setLoading(false);
+    }
   }
 }
 
@@ -49,11 +68,17 @@ class _Signupform_pageState extends State<Signupform_page> {
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double padding = screenWidth * 0.05;
+    final double fontSize = screenHeight * 0.02;
+
     return ChangeNotifierProvider(
       create: (_) => SignupController(),
       child: Consumer<SignupController>(
         builder: (context, provider, child) {
           return SingleChildScrollView(
+            padding: EdgeInsets.all(padding),
             child: Form(
               key: _formKey,
               child: Column(
@@ -69,10 +94,11 @@ class _Signupform_pageState extends State<Signupform_page> {
                       }
                       return null;
                     },
+                    fontSize: fontSize,
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: screenHeight * 0.02),
                   _buildTextField(
-                    label: 'Enter your email',
+                    label: 'Email Address',
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
@@ -81,8 +107,9 @@ class _Signupform_pageState extends State<Signupform_page> {
                       }
                       return null;
                     },
+                    fontSize: fontSize,
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: screenHeight * 0.02),
                   _buildPasswordField(
                     label: 'Password',
                     controller: passwordController,
@@ -92,8 +119,9 @@ class _Signupform_pageState extends State<Signupform_page> {
                         passToggle = !passToggle;
                       });
                     },
+                    fontSize: fontSize,
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: screenHeight * 0.02),
                   _buildPasswordField(
                     label: 'Confirm Password',
                     controller: confirmPasswordController,
@@ -112,8 +140,9 @@ class _Signupform_pageState extends State<Signupform_page> {
                       }
                       return null;
                     },
+                    fontSize: fontSize,
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: screenHeight * 0.04),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -122,9 +151,11 @@ class _Signupform_pageState extends State<Signupform_page> {
                               valueColor:
                                   AlwaysStoppedAnimation<Color>(Colors.white),
                             )
-                          : Text("Proceed"),
+                          : Text("Proceed",
+                              style: TextStyle(fontSize: fontSize)),
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 12),
+                        padding:
+                            EdgeInsets.symmetric(vertical: screenHeight * 0.02),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(100),
                         ),
@@ -144,7 +175,7 @@ class _Signupform_pageState extends State<Signupform_page> {
                             },
                     ),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: screenHeight * 0.02),
                 ],
               ),
             ),
@@ -159,6 +190,7 @@ class _Signupform_pageState extends State<Signupform_page> {
     required TextEditingController controller,
     required TextInputType keyboardType,
     required String? Function(String?) validator,
+    required double fontSize,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,7 +199,7 @@ class _Signupform_pageState extends State<Signupform_page> {
           label,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 15,
+            fontSize: fontSize,
             color: Color.fromRGBO(47, 47, 47, 1),
           ),
         ),
@@ -202,6 +234,7 @@ class _Signupform_pageState extends State<Signupform_page> {
     required bool obscureText,
     required VoidCallback togglePassword,
     String? Function(String?)? validator,
+    required double fontSize,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -210,7 +243,7 @@ class _Signupform_pageState extends State<Signupform_page> {
           label,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 15,
+            fontSize: fontSize,
           ),
         ),
         SizedBox(height: 8), // Reduced space between text and field

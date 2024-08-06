@@ -1,9 +1,11 @@
+import 'package:bespoke_ai_job_app/features/home/pages/forgetPaasword/forgetPassword.dart';
 import 'package:bespoke_ai_job_app/features/home/pages/home_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SignInForm extends StatefulWidget {
-  const SignInForm({super.key});
+  const SignInForm({Key? key}) : super(key: key);
 
   @override
   State<SignInForm> createState() => _SignInFormState();
@@ -76,19 +78,20 @@ class _SignInFormState extends State<SignInForm> {
                           ),
                           onPressed: provider.loading
                               ? null
-                              : () {
+                              : () async {
                                   if (_formKey.currentState!.validate()) {
-                                    provider.signin(
-                                      context,
+                                    bool success = await provider.signin(
                                       emailController.text,
                                       _passwordController.text,
                                     );
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => HomePage(),
-                                      ),
-                                    );
+                                    if (success) {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => HomePage(),
+                                        ),
+                                      );
+                                    }
                                   }
                                 },
                         ),
@@ -99,7 +102,14 @@ class _SignInFormState extends State<SignInForm> {
                 SizedBox(height: 20),
                 Center(
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ForgotPasswordPage(),
+                        ),
+                      );
+                    },
                     child: Text('Forgot Password'),
                   ),
                 ),
@@ -214,10 +224,22 @@ class SigninController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> signin(
-      BuildContext context, String email, String password) async {
+  Future<bool> signin(String email, String password) async {
     setLoading(true);
-    await Future.delayed(Duration(seconds: 2)); // Simulate network call
-    setLoading(false);
+    try {
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      setLoading(false);
+      return userCredential.user != null;
+    } on FirebaseAuthException catch (e) {
+      setLoading(false);
+      print('Failed to sign in: $e');
+      // Optionally show an error message to the user
+      return false;
+    }
   }
 }
+
