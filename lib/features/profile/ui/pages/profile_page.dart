@@ -27,7 +27,6 @@ class _ProfilePageState extends State<ProfilePage> {
       await FirebaseAuth.instance.signOut();
       Navigator.pushReplacementNamed(context, '/login');
     } catch (e) {
-      // Handle the error if necessary
       print("Error logging out: $e");
     }
   }
