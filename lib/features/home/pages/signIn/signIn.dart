@@ -6,6 +6,10 @@ import 'package:flutter/widgets.dart';
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
 
+  static route() => MaterialPageRoute(
+        builder: (context) => SignIn(),
+      );
+
   @override
   State<SignIn> createState() => _SignInState();
 }
@@ -15,43 +19,31 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () { },
-        ),
+        leading: null,
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title:  Text(
+        title: Text(
           'Welcome back!',
-          style: 
-          TextStyle(
-            fontSize: 24, 
-            fontWeight: FontWeight.w600),
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
         ),
       ),
-
-      
-      body:  SingleChildScrollView(
-      child: Padding(
-        padding:  EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-          
-            Text(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
                 'Login to your account',
                 style: TextStyle(
-                  color: Color.fromRGBO(47, 47, 47, 1),
-                fontSize: 18, 
-                fontWeight: FontWeight.w500),
+                    color: Color.fromRGBO(47, 47, 47, 1),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500),
               ),
               SizedBox(height: 10),
-       
               SignInForm(),
               SizedBox(height: 10),
-              
-              
-             Row(
+              Row(
                 children: [
                   Flexible(
                     child: Divider(
@@ -75,12 +67,9 @@ class _SignInState extends State<SignIn> {
                     ),
                   ),
                 ],
-             ),
-           
-        SizedBox(height: 10),
-        
-       
-        Row(
+              ),
+              SizedBox(height: 10),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
@@ -108,9 +97,7 @@ class _SignInState extends State<SignIn> {
                   ),
                 ],
               ),
-      
               SizedBox(height: 10),
-    
               Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -119,8 +106,9 @@ class _SignInState extends State<SignIn> {
                     TextButton(
                       onPressed: () {
                         Navigator.push(
-                          context, 
-                          MaterialPageRoute(builder: (context) => SignUpForm()));
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignUpForm()));
                       },
                       child: Text(
                         'Sign up',
@@ -134,11 +122,10 @@ class _SignInState extends State<SignIn> {
                 ),
               ),
               SizedBox(height: 10),
-      ],
-      
+            ],
+          ),
         ),
-        ),
-    ), 
+      ),
     );
   }
 }
