@@ -3,6 +3,8 @@ import 'package:bespoke_ai_job_app/features/home/pages/signUp/signUpForm.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../extensions/auth.dart';
+
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
 
@@ -60,33 +62,35 @@ class _SignUpFormState extends State<SignUpForm> {
                 ],
               ),
               SizedBox(height: 5),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: Image.asset('assets/google_icon.png'),
-                    iconSize: 40,
-                    onPressed: () {
-                      // Handle Google sign-in
-                    },
-                  ),
-                  SizedBox(width: 10), // Adjust the width as needed
-                  IconButton(
-                    icon: Image.asset('assets/facebook_icon.png'),
-                    iconSize: 40,
-                    onPressed: () {
-                      print('facebo0k');
-                    },
-                  ),
-                  SizedBox(width: 10), // Adjust the width as needed
-                  IconButton(
-                    icon: Image.asset('assets/apple_icon.png'),
-                    iconSize: 40,
-                    onPressed: () {
-                      // Handle Apple sign-in
-                    },
-                  ),
-                ],
+              Padding(
+                padding:  EdgeInsets.symmetric(horizontal: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    GestureDetector(
+                      onTap: (){
+                        AuthMethods().signInWithGoogle(context);
+                      },
+                      child: Container(
+                        child: Padding(padding: EdgeInsets.all(10),
+                          child: Image.asset("assets/google.png"),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 5),
+                    Container(
+                      child: Padding(padding: EdgeInsets.all(10),
+                        child: Image.asset("assets/facebook.png"),
+                      ),
+                    ),
+                    SizedBox(width: 5),
+                    Container(
+                      child: Padding(padding: EdgeInsets.all(10),
+                        child: Image.asset("assets/apple.png"),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height: 5),
               Row(

@@ -64,12 +64,6 @@ class _SignInFormState extends State<SignInForm> {
                       return SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          child: provider.loading
-                              ? CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.white),
-                                )
-                              : Text("Signin"),
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(vertical: 12),
                             shape: RoundedRectangleBorder(
@@ -94,6 +88,12 @@ class _SignInFormState extends State<SignInForm> {
                                     }
                                   }
                                 },
+                          child: provider.loading
+                              ? const CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white),
+                                )
+                              : Text("Login"),
                         ),
                       );
                     },
