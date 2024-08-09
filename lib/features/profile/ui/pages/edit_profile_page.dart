@@ -72,10 +72,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 });
                 Navigator.pop(context);
               },
-              child: const Text('Save'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF092C4C), // Background color
               ),
+              child: const Text('Save'),
             ),
           ],
         ),
