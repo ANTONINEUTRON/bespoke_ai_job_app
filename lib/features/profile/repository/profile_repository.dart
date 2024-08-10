@@ -1,22 +1,23 @@
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class ProfileRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
 
-  /// Update the user's display name and phone number
   Future<void> updateProfile({
     required String displayName,
     required String phoneNumber,
     String? verificationId,
     String? smsCode,
+    String? photoURL,
   }) async {
     try {
       User? user = _auth.currentUser;
       if (user != null) {
-        // Update display name
         await user.updateDisplayName(displayName);
 
-        // Update phone number
         if (verificationId != null && smsCode != null) {
           final credential = PhoneAuthProvider.credential(
             verificationId: verificationId,
@@ -25,7 +26,10 @@ class ProfileRepository {
           await user.updatePhoneNumber(credential);
         }
 
-        // Reload user to update display name and phone number
+        if (photoURL != null) {
+          await user.updatePhotoURL(photoURL);
+        }
+
         await user.reload();
         user = _auth.currentUser;
       } else {
@@ -36,11 +40,9 @@ class ProfileRepository {
     }
   }
 
-  /// Verify the phone number and send an SMS code
   Future<void> verifyPhoneNumber(String phoneNumber,
       Function(String verificationId) onCodeSent) async {
     verificationCompleted(PhoneAuthCredential credential) async {
-      // Auto-resolution, if you have received the code automatically
       await _auth.currentUser?.updatePhoneNumber(credential);
     }
 
@@ -49,13 +51,10 @@ class ProfileRepository {
     }
 
     codeSent(String verificationId, int? resendToken) {
-      // Code sent, pass the verificationId to be used later
       onCodeSent(verificationId);
     }
 
-    codeAutoRetrievalTimeout(String verificationId) {
-      // Called when auto-retrieval times out
-    }
+    codeAutoRetrievalTimeout(String verificationId) {}
 
     await _auth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
@@ -65,4 +64,20 @@ class ProfileRepository {
       codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
     );
   }
+
+  Future<String> uploadProfilePicture(File image) async {
+    try {
+      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+      Reference storageRef = _storage.ref().child('profile_pictures').child(fileName);
+      UploadTask uploadTask = storageRef.putFile(image);
+      TaskSnapshot snapshot = await uploadTask;
+      String downloadURL = await snapshot.ref.getDownloadURL();
+      return downloadURL;
+    } catch (e) {
+      throw Exception('Failed to upload profile picture: $e');
+    }
+  }
 }
+
+
+

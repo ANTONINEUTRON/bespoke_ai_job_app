@@ -223,7 +223,6 @@ import '../../../home/pages/signIn/signIn.dart';
 import 'edit_profile_page.dart';
 import 'change_password_page.dart';
 
-
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -232,6 +231,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  User? currentUser;
 
   Future<void> _logout() async {
     try {
@@ -251,7 +251,7 @@ class _ProfilePageState extends State<ProfilePage> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasData) {
-            User? currentUser = snapshot.data;
+            currentUser = snapshot.data;
 
             return Stack(
               children: [
@@ -267,19 +267,41 @@ class _ProfilePageState extends State<ProfilePage> {
                         Center(
                           child: Column(
                             children: [
-                              CircleAvatar(
-                                radius: 41,
-                                backgroundColor: Colors.white,
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => EditProfilePage(
+                                        name: currentUser?.displayName ?? '',
+                                        phoneNumber: currentUser?.phoneNumber ?? '',
+                                        photoURL: currentUser?.photoURL,
+                                        onSave: (updatedData) {
+                                          setState(() {
+                                            // Update UI with new data if needed
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                },
                                 child: CircleAvatar(
-                                  radius: 38,
-                                  backgroundColor: const Color(0xFFC0C0C0),
-                                  child: currentUser?.photoURL == null
-                                      ? Image.asset(
-                                    'assets/Vector.png',
-                                    width: 40,
-                                    height: 53,
-                                  )
-                                      : Image.network(currentUser!.photoURL!),
+                                  radius: 41,
+                                  backgroundColor: Colors.white,
+                                  child: CircleAvatar(
+                                    radius: 38,
+                                    backgroundColor: const Color(0xFFC0C0C0),
+                                    backgroundImage: currentUser?.photoURL != null
+                                        ? NetworkImage(currentUser!.photoURL!)
+                                        : null,
+                                    child: currentUser?.photoURL == null
+                                        ? Image.asset(
+                                      'assets/Vector.png',
+                                      width: 40,
+                                      height: 53,
+                                    )
+                                        : null,
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 16),
@@ -343,6 +365,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       builder: (context) => EditProfilePage(
                                         name: currentUser?.displayName ?? '',
                                         phoneNumber: currentUser?.phoneNumber ?? '',
+                                        photoURL: currentUser?.photoURL,
                                         onSave: (updatedData) {
                                           setState(() {
                                             // Update UI with new data if needed
@@ -435,11 +458,12 @@ class _ProfilePageState extends State<ProfilePage> {
               assetPath,
               width: 24,
               height: 24,
+              color: Colors.teal, // Set the icon color to teal green
             ),
           ),
         ),
         title: Text(title),
-        trailing: const Icon(Icons.arrow_forward_ios),
+        trailing: const Icon(Icons.arrow_forward_ios, color: Colors.teal), // Set the trailing icon color to teal green
         onTap: onTap,
       ),
     );
@@ -453,3 +477,4 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
+

@@ -85,18 +85,22 @@
 // }
 
 
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../repository/profile_repository.dart';
 
 class EditProfilePage extends StatefulWidget {
   final String name;
   final String phoneNumber;
+  final String? photoURL;
   final ValueChanged<Map<String, String>> onSave;
 
   const EditProfilePage({
     super.key,
     required this.name,
     required this.phoneNumber,
+    this.photoURL,
     required this.onSave,
   });
 
@@ -112,6 +116,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
   bool _isLoading = false;
   String? _errorMessage;
   String? _verificationId; // For phone number verification
+  File? _selectedImage;
+
+  final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
@@ -161,26 +168,56 @@ class _EditProfilePageState extends State<EditProfilePage> {
     }
 
     try {
+      String? photoURL;
+      if (_selectedImage != null) {
+        photoURL = await _profileRepository.uploadProfilePicture(_selectedImage!);
+      } else {
+        photoURL = widget.photoURL;
+      }
+
       await _profileRepository.updateProfile(
         displayName: _nameController.text,
         phoneNumber: _phoneController.text,
         verificationId: _verificationId,
         smsCode: '', // Replace with the actual SMS code input from the user
+        photoURL: photoURL,
       );
 
       widget.onSave({
         'name': _nameController.text,
         'phone': _phoneController.text,
+        'photoURL': photoURL ?? widget.photoURL ?? '', // Ensure a default empty string
       });
+
+      _showSuccessMessage('Profile updated successfully');
 
       Navigator.pop(context);
     } catch (e) {
       setState(() {
-        _errorMessage = 'incomplete credentials: $e';
+        _errorMessage = 'Error updating profile: $e';
       });
     } finally {
       setState(() {
         _isLoading = false;
+      });
+    }
+  }
+
+  void _showSuccessMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.teal,
+        duration: const Duration(seconds: 3),
+      ),
+    );
+  }
+
+  Future<void> _pickImage() async {
+    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _selectedImage = File(pickedFile.path);
       });
     }
   }
@@ -193,13 +230,29 @@ class _EditProfilePageState extends State<EditProfilePage> {
           'Edit Profile',
           style: TextStyle(color: Colors.white),
         ),
-        backgroundColor: const Color(0xFF092C4C),
+        backgroundColor: Colors.teal,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            GestureDetector(
+              onTap: _pickImage,
+              child: CircleAvatar(
+                radius: 50,
+                backgroundColor: Colors.grey[300],
+                backgroundImage: _selectedImage != null
+                    ? FileImage(_selectedImage!)
+                    : widget.photoURL != null
+                    ? NetworkImage(widget.photoURL!) as ImageProvider
+                    : null,
+                child: _selectedImage == null && widget.photoURL == null
+                    ? Icon(Icons.camera_alt, color: Colors.teal, size: 30)
+                    : null,
+              ),
+            ),
+            const SizedBox(height: 20),
             TextField(
               controller: _nameController,
               decoration: const InputDecoration(
@@ -227,11 +280,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
             _isLoading
                 ? const CircularProgressIndicator()
                 : ElevatedButton(
-                   onPressed: _saveProfile,
-                    style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.teal,
-                       ),
-                    child: const Text('Save'),
+                 onPressed: _saveProfile,
+                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal,
+              ),
+                 child: const Text('Save'),
             ),
           ],
         ),

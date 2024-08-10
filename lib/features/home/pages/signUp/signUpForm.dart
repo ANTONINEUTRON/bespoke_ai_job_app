@@ -198,7 +198,7 @@ class _Signupform_pageState extends State<Signupform_page> {
         Text(
           label,
           style: TextStyle(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w500,
             fontSize: fontSize,
             color: Color.fromRGBO(47, 47, 47, 1),
           ),
@@ -242,7 +242,7 @@ class _Signupform_pageState extends State<Signupform_page> {
         Text(
           label,
           style: TextStyle(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w500,
             fontSize: fontSize,
           ),
         ),

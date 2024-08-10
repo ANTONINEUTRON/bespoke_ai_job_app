@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         debugShowCheckedModeBanner: false,
-        home: const ProfilePage(),
+        home: const SignIn(),
         
       ),
     );
