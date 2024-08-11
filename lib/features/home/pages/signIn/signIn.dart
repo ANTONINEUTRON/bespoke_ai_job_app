@@ -3,6 +3,8 @@ import 'package:bespoke_ai_job_app/features/home/pages/signUp/signUp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../../../extensions/auth.dart';
+
 class SignIn extends StatefulWidget {
   const SignIn({super.key});
 
@@ -33,16 +35,19 @@ class _SignInState extends State<SignIn> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Login to your account',
-                style: TextStyle(
-                    color: Color.fromRGBO(47, 47, 47, 1),
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Text(
+                  'Login to your account',
+                  style: TextStyle(
+                      color: Color.fromRGBO(47, 47, 47, 1),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500),
+                ),
               ),
               SizedBox(height: 10),
               SignInForm(),
-              SizedBox(height: 10),
+              SizedBox(height: 16),
               Row(
                 children: [
                   Flexible(
@@ -56,7 +61,7 @@ class _SignInState extends State<SignIn> {
                     child: Text(
                       'Or continue with',
                       style: TextStyle(
-                        fontSize: 17,
+                        fontSize: 16,
                       ),
                     ),
                   ),
@@ -76,6 +81,7 @@ class _SignInState extends State<SignIn> {
                     icon: Image.asset('assets/google_icon.png'),
                     iconSize: 40,
                     onPressed: () {
+                      AuthMethods().signInWithGoogle(context);
                       // Handle Google sign-in
                     },
                   ),
@@ -98,28 +104,31 @@ class _SignInState extends State<SignIn> {
                 ],
               ),
               SizedBox(height: 10),
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Don't have an account? "),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SignUpForm()));
-                      },
-                      child: Text(
-                        'Sign up',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.teal,
-                        ),
-                      ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Don't have an account?",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Color.fromRGBO(47, 47, 47, 1),
                     ),
-                  ],
-                ),
+                  ),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SignUpForm()));
+                    },
+                    child: const Text("Sign up",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.teal,
+                      ),),
+                  ),
+                ],
               ),
               SizedBox(height: 10),
             ],

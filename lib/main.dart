@@ -1,6 +1,7 @@
 import 'package:bespoke_ai_job_app/features/home/pages/signIn/signIn.dart';
 import 'package:bespoke_ai_job_app/features/jobs/blocs/jobs_bloc.dart';
 import 'package:bespoke_ai_job_app/features/jobs/data/model/job.dart';
+import 'package:bespoke_ai_job_app/features/profile/ui/pages/profile_page.dart';
 import 'package:bespoke_ai_job_app/shared/app_constants.dart';
 import 'package:bespoke_ai_job_app/features/resume/bloc/resume_bloc.dart';
 import 'package:bespoke_ai_job_app/features/resume/data/model/resume_model.dart';
