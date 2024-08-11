@@ -1,5 +1,5 @@
-import 'package:bespoke_ai_job_app/features/home/pages/signIn/signIn.dart';
-import 'package:bespoke_ai_job_app/features/home/pages/signUp/signUpForm.dart';
+import 'package:bespoke_ai_job_app/features/auth/pages/signIn/signIn.dart';
+import 'package:bespoke_ai_job_app/features/auth/pages/signUp/signUpForm.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

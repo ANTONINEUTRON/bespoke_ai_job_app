@@ -1,4 +1,5 @@
 import 'package:bespoke_ai_job_app/features/jobs/blocs/jobs_bloc.dart';
+import 'package:bespoke_ai_job_app/features/jobs/ui/widgets/potential_interview_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -42,9 +43,30 @@ class _JobAiInsightsViewState extends State<JobAiInsightsView> {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : Markdown(
-              selectable: true,
-              data: aiInsight,
+          : Column(
+              children: [
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.82,
+                  child: Markdown(
+                    selectable: true,
+                    data: aiInsight,
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    bloc.generateInterviewQuestions();
+
+                    showModalBottomSheet(
+                      context: context,
+                      enableDrag: true,
+                      showDragHandle: true,
+                      builder: (context) =>
+                          const PotentialInterviewQuestionsView(),
+                    );
+                  },
+                  child: const Text("Potential Interview Questions"),
+                ),
+              ],
             ),
     );
   }

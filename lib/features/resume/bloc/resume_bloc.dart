@@ -58,7 +58,7 @@ class ResumeBloc extends Cubit<ResumeState> {
 
   Future<void> setSelectedResume({required ResumeModel resume}) async {
     emit(
-      state.copyWith(selectedResume: resume),
+      ResumeState(selectedResume: resume,resumes: state.resumes,),
     );
   }
 

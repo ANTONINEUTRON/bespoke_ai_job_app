@@ -16,11 +16,6 @@ class ResumePage extends StatelessWidget {
     List<ResumeModel> listOfResume = context.watch<ResumeBloc>().state.resumes;
 
     return Scaffold(
-      // appBar: AppBar(
-      //   automaticallyImplyLeading: false,
-      //   title: const Text("Resume"),
-      //   centerTitle: true,
-      // ),
       body: SafeArea(
         child: ListView(
           padding: EdgeInsets.all(16.sp),

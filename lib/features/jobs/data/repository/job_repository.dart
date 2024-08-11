@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:bespoke_ai_job_app/features/jobs/data/model/interview.dart';
 import 'package:bespoke_ai_job_app/features/jobs/data/model/job.dart';
 import 'package:bespoke_ai_job_app/features/resume/data/model/resume_model.dart';
 import 'package:bespoke_ai_job_app/shared/app_constants.dart';
@@ -49,5 +51,31 @@ class JobRepository {
 
     //return response
     return response.text!;
+  }
+
+  Future<List<Interview>> getInterviewQuestion({
+    required String jobDescription,
+  }) async {
+    //prepare prompt
+    var prompt = "This is a Job posting ${jobDescription}.\n " +
+        "provide atleast 5 and not more than 20 interview questions and their answers as json using this schema\n\n" +
+        "Interview = {'question': string, 'response': string,}\n Return: Array<Interview>";
+
+    final response =
+        await AppConstants.GEMINI.generateContent([Content.text(prompt)]);
+
+    //return response
+    var jsonAsString = _removeAllCharactersExceptJson(text: response.text!);
+    var jsonObj = jsonDecode(jsonAsString) as List<dynamic>;
+
+    return jsonObj.map(
+      (element) {
+        return Interview.fromJson(element);
+      },
+    ).toList();
+  }
+
+  String _removeAllCharactersExceptJson({required String text}) {
+    return text.substring(text.indexOf("["), text.lastIndexOf("]") + 1);
   }
 }

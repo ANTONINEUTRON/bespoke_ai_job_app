@@ -42,9 +42,10 @@ class UploadedResumeItem extends StatelessWidget {
                   );
                 },
                 child: resume.screenshots == null
-                    ? SizedBox(
+                    ? Container(
                         height: MediaQuery.of(context).size.height * 0.2,
                         width: MediaQuery.of(context).size.width,
+                        child: ListView(),//Column(mainAxisSize: MainAxisSize.max,crossAxisAlignment: CrossAxisAlignment.stretch,children: [Text("gg")],),
                       )
                     : Image.file(
                         opacity: const AlwaysStoppedAnimation(0.17),

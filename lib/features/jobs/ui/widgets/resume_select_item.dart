@@ -1,5 +1,5 @@
 import 'package:bespoke_ai_job_app/features/jobs/blocs/jobs_bloc.dart';
-import 'package:bespoke_ai_job_app/features/jobs/ui/dialogs/job_ai_insights_view.dart';
+import 'package:bespoke_ai_job_app/features/jobs/ui/pages/job_analysis_result_page.dart';
 import 'package:bespoke_ai_job_app/features/resume/data/model/resume_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,13 +27,6 @@ class ResumeSelectItem extends StatelessWidget {
           context,
           JobAiInsightsView.route(),
         );
-        // showModalBottomSheet(
-        //   context: context,
-        //   isScrollControlled: true,
-        //   builder: (context) {
-        //     return const JobAiInsightsView();
-        //   },
-        // );
       },
       child: Card.outlined(
         child: ListTile(

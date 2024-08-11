@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:bespoke_ai_job_app/features/jobs/blocs/jobs_state.dart';
@@ -19,7 +18,9 @@ class JobsBloc extends Cubit<JobsState> {
     // save to db
     await _jobRepository.saveJob(job);
 
-    emit(state.copyWith(job: job,));
+    emit(state.copyWith(
+      job: job,
+    ));
 
     fetchAllJobs();
   }
@@ -44,7 +45,6 @@ class JobsBloc extends Cubit<JobsState> {
       String aiInsight = await _jobRepository.getAiResponse(
         job: state.job!,
         resume: resume,
-        
       );
 
       emit(
@@ -71,4 +71,35 @@ class JobsBloc extends Cubit<JobsState> {
   }
 
   void reset() => emit(JobsState(jobs: state.jobs));
+
+  void generateInterviewQuestions() async {
+    emit(
+      state.copyWith(
+        interviewQuestionsStatus: InterviewQuestionsStatus.processing,
+        interviewQuestions: null,
+      ),
+    );
+
+    try {
+      var questions = await _jobRepository.getInterviewQuestion(
+        jobDescription: state.job!.description,
+      );
+
+      emit(
+        state.copyWith(
+            interviewQuestions: questions,
+            interviewQuestionsStatus: InterviewQuestionsStatus.success),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          errorMsg: "An unexpected error occured while generating interview question",
+          interviewQuestionsStatus: InterviewQuestionsStatus.error,
+        ),
+      );
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
 }
