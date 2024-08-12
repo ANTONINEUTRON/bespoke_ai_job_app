@@ -6,7 +6,7 @@ Bespoke is a Flutter-based mobile application that empowers job seekers by provi
 ### Key Features
 * **Resume Analysis:** Utilizes AI to provide in-depth analysis of resumes, identifying strengths, weaknesses, and areas for improvement.
 * **Job Posting Management:** Allows users to save and organize job postings for easy comparison and tracking.
-* **AI-Driven Insights:** Offers tailored recommendations based on resume analysis, job market trends with possible interview sections.
+* **AI-Driven Insights:** Offers tailored recommendations based on resume analysis, job market trends with possible interview questions.
 * **Cross-Platform Compatibility:** Built with Flutter for seamless user experience on both iOS and Android.
 
 ### Gemini Setup
