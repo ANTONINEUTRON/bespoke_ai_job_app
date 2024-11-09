@@ -29,7 +29,7 @@ if (flutterVersionName == null) {
 android {
     namespace = "com.abc.bespoke_ai_job_app"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "25.1.8937393"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -53,6 +53,9 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.debug
         }
+    }
+    kotlinOptions {
+        jvmTarget = "17"
     }
 }
 

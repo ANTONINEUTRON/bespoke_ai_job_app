@@ -1,7 +1,8 @@
-import 'package:bespoke_ai_job_app/features/auth/pages/signIn/signInForm.dart';
+
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../../auth/pages/signIn/signIn.dart';
+import '../../../registration/ui/pages/signIn/signIn_page.dart';
 import 'edit_profile_page.dart';
 import 'change_password_page.dart';
 
@@ -18,7 +19,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _logout() async {
     try {
       await FirebaseAuth.instance.signOut();
-      Navigator.pushReplacement(context, SignIn.route());
+      Navigator.pushReplacement(context, SignInPage.route());
     } catch (e) {
       print("Error logging out: $e");
     }
@@ -68,7 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   );
                                 },
                                 child: CircleAvatar(
-                                  radius: 41,
+                                  radius: 40,
                                   backgroundColor: Colors.white,
                                   child: CircleAvatar(
                                     radius: 38,
@@ -87,15 +88,16 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                               ),
                               const SizedBox(height: 16),
+                              // Display name added below the image
                               Text(
-                                currentUser?.displayName ?? "Anon",
+                                currentUser?.displayName ?? "No Name Set",
                                 style: const TextStyle(
                                   fontSize: 24.0,
                                   color: Colors.white,
                                 ),
                               ),
                               Text(
-                                currentUser?.email ?? "nomail",
+                                currentUser?.email ?? "No Email Set",
                                 style: TextStyle(
                                   fontSize: 18.0,
                                   color: Colors.white.withOpacity(0.8),
@@ -111,9 +113,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 SingleChildScrollView(
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 275,
-                      ),
+                      SizedBox(height: 275), // Adjusted space for the profile section
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: Container(
@@ -206,19 +206,29 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             );
           } else {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("No user logged in."),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const SignIn()));
-                    },
-                    child: Text("Go to Sign In"),
-                  ),
-                ],
+            return Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/wall.png"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("No user logged in."),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const SignInPage()),
+                        );
+                      },
+                      child: Text("Go to Sign In"),
+                    ),
+                  ],
+                ),
               ),
             );
           }
@@ -259,4 +269,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
+
+
+
 

@@ -1,30 +1,39 @@
-import 'package:bespoke_ai_job_app/features/auth/pages/forgetPassword/forgetPassword.dart';
+
 import 'package:bespoke_ai_job_app/features/home/pages/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SignInForm extends StatefulWidget {
-  const SignInForm({Key? key}) : super(key: key);
+import '../../../../../extensions/auth.dart';
+import '../forgetPassword/forgetPassword_page.dart';
+
+class SignInFormPage extends StatefulWidget {
+  const SignInFormPage({Key? key}) : super(key: key);
 
   @override
-  State<SignInForm> createState() => _SignInFormState();
+  State<SignInFormPage> createState() => _SignInFormState();
 }
 
-class _SignInFormState extends State<SignInForm> {
+class _SignInFormState extends State<SignInFormPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   bool passToggle = true;
 
   @override
   Widget build(BuildContext context) {
+
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+    final double padding = screenWidth * 0.05;
+    final double fontSize = screenHeight * 0.02;
+
     return Form(
       key: _formKey,
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -35,14 +44,18 @@ class _SignInFormState extends State<SignInForm> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email';
+                    } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                      return 'Please enter a valid email address';
                     }
                     return null;
                   },
+                  fontSize: 16,
+
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: screenHeight * 0.02),
                 _buildPasswordField(
                   label: 'Password',
-                  controller: _passwordController,
+                  controller: passwordController,
                   obscureText: passToggle,
                   togglePassword: () {
                     setState(() {
@@ -55,8 +68,9 @@ class _SignInFormState extends State<SignInForm> {
                     }
                     return null;
                   },
+                  fontSize: 16,
                 ),
-                SizedBox(height: 16),
+                SizedBox(height: screenHeight * 0.04),
                 ChangeNotifierProvider(
                   create: (_) => SigninController(),
                   child: Consumer<SigninController>(
@@ -65,7 +79,7 @@ class _SignInFormState extends State<SignInForm> {
                         width: double.infinity,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(vertical: 12),
+                            padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(100),
                             ),
@@ -73,33 +87,38 @@ class _SignInFormState extends State<SignInForm> {
                           onPressed: provider.loading
                               ? null
                               : () async {
-                                  if (_formKey.currentState!.validate()) {
-                                    bool success = await provider.signin(
-                                      emailController.text,
-                                      _passwordController.text,
-                                    );
-                                    if (success) {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => HomePage(),
-                                        ),
-                                      );
-                                    }
-                                  }
-                                },
+                            if (_formKey.currentState!.validate()) {
+                              bool success = await provider.signin(
+                                emailController.text.trim(),
+                                passwordController.text.trim(),
+                              );
+                              if (success) {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const HomePage(),
+                                  ),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Login failed. Please try again.'),
+                                  ),
+                                );
+                              }
+                            }
+                          },
                           child: provider.loading
                               ? const CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.white),
-                                )
-                              : Text("Login"),
+                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          )
+                              : const Text("Login"),
                         ),
                       );
                     },
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: screenHeight * 0.02),
                 Center(
                   child: TextButton(
                     onPressed: () {
@@ -110,10 +129,10 @@ class _SignInFormState extends State<SignInForm> {
                         ),
                       );
                     },
-                    child: Text('Forgot Password'),
+                    child: const Text('Forgot Password?'),
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: screenHeight * 0.02),
               ],
             ),
           ),
@@ -127,6 +146,7 @@ class _SignInFormState extends State<SignInForm> {
     required TextEditingController controller,
     required TextInputType keyboardType,
     required String? Function(String?) validator,
+    required double fontSize,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,29 +154,24 @@ class _SignInFormState extends State<SignInForm> {
         Text(
           label,
           style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
-            color: Color.fromRGBO(47, 47, 47, 1),
+            fontWeight: FontWeight.w500,
+            fontSize: fontSize,
+            color: const Color.fromRGBO(47, 47, 47, 1),
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         TextFormField(
           keyboardType: keyboardType,
           controller: controller,
           validator: validator,
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Color.fromRGBO(175, 175, 175, 1),
-              ),
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Colors.grey),
             ),
-            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-            labelText: 'Enter $label',
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(4),
-              borderSide: BorderSide(
-                color: Color.fromRGBO(175, 175, 175, 1),
-              ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Colors.teal),
             ),
           ),
         ),
@@ -170,6 +185,7 @@ class _SignInFormState extends State<SignInForm> {
     required bool obscureText,
     required VoidCallback togglePassword,
     String? Function(String?)? validator,
+    required double fontSize,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,35 +193,28 @@ class _SignInFormState extends State<SignInForm> {
         Text(
           label,
           style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 15,
+            fontWeight: FontWeight.w500,
+            fontSize: fontSize,
+            color: const Color.fromRGBO(47, 47, 47, 1),
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         TextFormField(
-          keyboardType: TextInputType.visiblePassword,
           controller: controller,
-          validator: validator,
           obscureText: obscureText,
+          validator: validator,
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+            suffixIcon: IconButton(
+              icon: Icon(obscureText ? Icons.visibility_off : Icons.visibility),
+              onPressed: togglePassword,
+            ),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Color.fromRGBO(175, 175, 175, 1),
-              ),
-            ),
-            labelText: 'Input $label',
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Color.fromRGBO(175, 175, 175, 1),
-              ),
               borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Colors.grey),
             ),
-            suffixIcon: InkWell(
-              onTap: togglePassword,
-              child: Icon(
-                obscureText ? Icons.visibility : Icons.visibility_off,
-              ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Colors.teal),
             ),
           ),
         ),
@@ -214,32 +223,9 @@ class _SignInFormState extends State<SignInForm> {
   }
 }
 
-class SigninController extends ChangeNotifier {
-  bool _loading = false;
 
-  bool get loading => _loading;
 
-  void setLoading(bool value) {
-    _loading = value;
-    notifyListeners();
-  }
 
-  Future<bool> signin(String email, String password) async {
-    setLoading(true);
-    try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      setLoading(false);
-      return userCredential.user != null;
-    } on FirebaseAuthException catch (e) {
-      setLoading(false);
-      print('Failed to sign in: $e');
-      // Optionally show an error message to the user
-      return false;
-    }
-  }
-}
+
+
 

@@ -52,7 +52,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: screenHeight * 0.02,
-                  color: Color.fromRGBO(47, 47, 47, 1),
+                  color: Colors.black87
                 ),
               ),
               SizedBox(height: screenHeight * 0.01),
@@ -90,7 +90,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: screenHeight * 0.02,
-                  color: Color.fromRGBO(47, 47, 47, 1),
+                    color: Colors.black87
                 ),
               ),
               SizedBox(height: screenHeight * 0.01),
@@ -138,9 +138,9 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     padding:
                         EdgeInsets.symmetric(vertical: screenHeight * 0.02),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(30),
                     ),
-                    backgroundColor: Color.fromRGBO(3, 92, 70, 1),
+                    backgroundColor: Colors.teal,
                   ),
                   child: Text(
                     'Set Password',

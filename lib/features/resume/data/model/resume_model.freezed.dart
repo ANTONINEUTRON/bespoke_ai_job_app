@@ -33,8 +33,12 @@ mixin _$ResumeModel {
   @HiveField(6)
   List<String>? get screenshots => throw _privateConstructorUsedError;
 
+  /// Serializes this ResumeModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ResumeModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ResumeModelCopyWith<ResumeModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -64,6 +68,8 @@ class _$ResumeModelCopyWithImpl<$Res, $Val extends ResumeModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ResumeModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -128,6 +134,8 @@ class __$$ResumeModelImplCopyWithImpl<$Res>
       _$ResumeModelImpl _value, $Res Function(_$ResumeModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ResumeModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -233,12 +241,14 @@ class _$ResumeModelImpl extends _ResumeModel {
                 .equals(other._screenshots, _screenshots));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, title, filePath, date,
       aiInsight, const DeepCollectionEquality().hash(_screenshots));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ResumeModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ResumeModelImplCopyWith<_$ResumeModelImpl> get copyWith =>
@@ -283,8 +293,11 @@ abstract class _ResumeModel extends ResumeModel {
   @override
   @HiveField(6)
   List<String>? get screenshots;
+
+  /// Create a copy of ResumeModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ResumeModelImplCopyWith<_$ResumeModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

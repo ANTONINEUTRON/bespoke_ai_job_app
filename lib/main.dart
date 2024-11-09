@@ -1,5 +1,6 @@
 import 'package:bespoke_ai_job_app/features/home/pages/home_page.dart';
-import 'package:bespoke_ai_job_app/features/auth/pages/signIn/signIn.dart';
+import 'package:bespoke_ai_job_app/features/registration/ui/pages/forgetPassword/forgetPassword_page.dart';
+import 'package:bespoke_ai_job_app/features/registration/ui/pages/welcome_page/welcome_screen_page.dart';
 import 'package:bespoke_ai_job_app/features/jobs/blocs/jobs_bloc.dart';
 import 'package:bespoke_ai_job_app/features/jobs/data/model/job.dart';
 import 'package:bespoke_ai_job_app/features/profile/ui/pages/profile_page.dart';
@@ -11,6 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
+import 'features/registration/ui/pages/signIn/signIn_page.dart';
+import 'features/registration/ui/pages/signUp/signUp_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -70,7 +74,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         debugShowCheckedModeBanner: false,
-        home: const SignIn(),
+        home:  const ProfilePage(),
       ),
     );
   }
