@@ -35,10 +35,10 @@
 //   @override
 //   void initState() {
 //     super.initState();
-//     isEditMode = widget.job != null;
+//     isEditMode = widgets.job != null;
 //
 //     if (isEditMode) {
-//       _textEditingController.text = widget.job?.description ?? "";
+//       _textEditingController.text = widgets.job?.description ?? "";
 //       jobPosting = _textEditingController.text;
 //     }
 //   }
@@ -118,7 +118,7 @@
 //     // Checks if we are editing a job or updating it
 //     // in order to reuse object or create new object
 //     Job job = isEditMode
-//         ? widget.job!.copyWith(
+//         ? widgets.job!.copyWith(
 //             description: jobPosting!,
 //             date: DateTime.now(),
 //           )
