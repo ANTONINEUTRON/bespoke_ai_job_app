@@ -23,8 +23,12 @@ mixin _$Interview {
   String get question => throw _privateConstructorUsedError;
   String get response => throw _privateConstructorUsedError;
 
+  /// Serializes this Interview to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Interview
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $InterviewCopyWith<Interview> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -47,6 +51,8 @@ class _$InterviewCopyWithImpl<$Res, $Val extends Interview>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Interview
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -85,6 +91,8 @@ class __$$InterviewImplCopyWithImpl<$Res>
       _$InterviewImpl _value, $Res Function(_$InterviewImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Interview
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -133,11 +141,13 @@ class _$InterviewImpl implements _Interview {
                 other.response == response));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, question, response);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Interview
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$InterviewImplCopyWith<_$InterviewImpl> get copyWith =>
@@ -163,8 +173,11 @@ abstract class _Interview implements Interview {
   String get question;
   @override
   String get response;
+
+  /// Create a copy of Interview
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$InterviewImplCopyWith<_$InterviewImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,8 +1,15 @@
 import 'package:bespoke_ai_job_app/features/home/pages/home_page.dart';
-import 'package:bespoke_ai_job_app/features/auth/pages/signIn/signIn.dart';
+import 'package:bespoke_ai_job_app/features/profile/ui/pages/change_password_page.dart';
+import 'package:bespoke_ai_job_app/features/profile/ui/pages/contact_us_page.dart';
+import 'package:bespoke_ai_job_app/features/profile/ui/pages/faqs_page.dart';
+import 'package:bespoke_ai_job_app/features/profile/ui/pages/feed_back_page.dart';
+import 'package:bespoke_ai_job_app/features/profile/ui/pages/help_center_page.dart';
+import 'package:bespoke_ai_job_app/features/registration/ui/pages/forgetPassword/forgetPassword_page.dart';
+import 'package:bespoke_ai_job_app/features/registration/ui/pages/welcome_page/welcome_screen_page.dart';
 import 'package:bespoke_ai_job_app/features/jobs/blocs/jobs_bloc.dart';
 import 'package:bespoke_ai_job_app/features/jobs/data/model/job.dart';
 import 'package:bespoke_ai_job_app/features/profile/ui/pages/profile_page.dart';
+import 'package:bespoke_ai_job_app/features/resume/ui/pages/resume_page.dart';
 import 'package:bespoke_ai_job_app/shared/app_constants.dart';
 import 'package:bespoke_ai_job_app/features/resume/bloc/resume_bloc.dart';
 import 'package:bespoke_ai_job_app/features/resume/data/model/resume_model.dart';
@@ -10,7 +17,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+
+import 'features/registration/ui/pages/signIn/signIn_page.dart';
+import 'features/registration/ui/pages/signUp/signUp_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +35,7 @@ void main() async {
   await Hive.openBox<ResumeModel>(AppConstants.RESUME_BOX_NAME);
   await Hive.openBox<Job>(AppConstants.JOB_BOX_NAME);
   await Firebase.initializeApp();
+  await Settings.init(cacheProvider : SharePreferenceCache());
 
   runApp(const MyApp());
 }
@@ -31,7 +43,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  // This widgets is the root of your application.
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(
@@ -70,7 +82,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         debugShowCheckedModeBanner: false,
-        home: const SignIn(),
+        home:   WelcomeScreen(),
       ),
     );
   }

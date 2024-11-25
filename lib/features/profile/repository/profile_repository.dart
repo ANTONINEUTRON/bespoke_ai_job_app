@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+
+import '../../registration/ui/pages/signIn/signIn_page.dart';
 
 class ProfileRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -78,6 +81,14 @@ class ProfileRepository {
     }
   }
 }
+
+
+
+
+
+
+
+
 
 
 
