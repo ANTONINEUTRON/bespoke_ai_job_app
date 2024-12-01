@@ -199,92 +199,97 @@ class _AddJobPageState extends State<AddJobPage> {
         bloc.reset();
       },
       child: Scaffold(
-        body: Stack(
-          children: [
-            Image.asset(
-              'assets/wall2.jpg',
-              fit: BoxFit.cover,
-            ),
-            SafeArea(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 60.h), // Spacing at the top for header
-                    Text(
-                      isEditMode ? "Update Job" : "Add Job Description",
-                      style: TextStyle(
-                        fontSize: 22.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.teal.shade700,
-                      ),
-                    ).addSpacing(bottom: 16.h),
-                    Text(
-                      "Paste your job description below and get AI insights based on your selected resume.",
-                      style: TextStyle(fontSize: 14.sp, color: Colors.black87,fontWeight: FontWeight.w400),
-                    ).addSpacing(bottom: 16.h),
-                    Container(
-                      height: 250.h,
-                      padding: EdgeInsets.all(12.sp),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12.sp),
-                        border: Border.all(color: Colors.teal.shade200),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black12,
-                            blurRadius: 8,
-                            offset: Offset(2, 4),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Image.asset(
+                    'assets/wall2.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                  SafeArea(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [ 
+                          Text(
+                            isEditMode ? "Update Job" : "Add Job Description",
+                            style: TextStyle(
+                              fontSize: 22.sp,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.teal.shade700,
+                            ),
+                          ).addSpacing(bottom: 16.h),
+                          Text(
+                            "Paste your job description below and get AI insights based on your selected resume.",
+                            style: TextStyle(fontSize: 14.sp, color: Colors.black87,fontWeight: FontWeight.w400),
+                          ).addSpacing(bottom: 24.h),
+                          Container(
+                            height: 550.h,
+                            padding: EdgeInsets.all(12.sp),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12.sp),
+                              border: Border.all(color: Colors.teal.shade200),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 8,
+                                  offset: Offset(2, 4),
+                                ),
+                              ],
+                            ),
+                            child: TextField(
+                              controller: _textEditingController,
+                              onChanged: (value) => jobPosting = value,
+                              decoration: InputDecoration(
+                                hintText: "Paste the job description here...",
+                                border: InputBorder.none,
+                                hintStyle: TextStyle(color: Colors.grey[400]),
+                              ),
+                              maxLines: null,
+                              keyboardType: TextInputType.multiline,
+                              style: TextStyle(fontSize: 16.sp, color: Colors.black87),
+                            ),
+                          ),
+                          SizedBox(height: 16.h), // Reduced spacing for Analyze button
+                          Align(
+                            alignment: Alignment.center,
+                            child: OutlinedButton.icon(
+                              onPressed: () => _showSelectResumeDialog(context),
+                              icon: Icon(
+                                Icons.smart_button,
+                                color: Colors.teal.shade600,
+                              ),
+                              label: Text(
+                                "Analyze this Job",
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  color: Colors.teal.shade600,
+                                ),
+                              ),
+                              style: OutlinedButton.styleFrom(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 20.w,
+                                  vertical: 12.h,
+                                ),
+                                side: BorderSide(color: Colors.teal.shade600, width: 1.5),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.sp),
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                      child: TextField(
-                        controller: _textEditingController,
-                        onChanged: (value) => jobPosting = value,
-                        decoration: InputDecoration(
-                          hintText: "Paste the job description here...",
-                          border: InputBorder.none,
-                          hintStyle: TextStyle(color: Colors.grey[400]),
-                        ),
-                        maxLines: null,
-                        keyboardType: TextInputType.multiline,
-                        style: TextStyle(fontSize: 16.sp, color: Colors.black87),
-                      ),
                     ),
-                    SizedBox(height: 16.h), // Reduced spacing for Analyze button
-                    Align(
-                      alignment: Alignment.center,
-                      child: OutlinedButton.icon(
-                        onPressed: () => _showSelectResumeDialog(context),
-                        icon: Icon(
-                          Icons.smart_button,
-                          color: Colors.teal.shade600,
-                        ),
-                        label: Text(
-                          "Analyze this Job",
-                          style: TextStyle(
-                            fontSize: 16.sp,
-                            color: Colors.teal.shade600,
-                          ),
-                        ),
-                        style: OutlinedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 20.w,
-                            vertical: 12.h,
-                          ),
-                          side: BorderSide(color: Colors.teal.shade600, width: 1.5),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.sp),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

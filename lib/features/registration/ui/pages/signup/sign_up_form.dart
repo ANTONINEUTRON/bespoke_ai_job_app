@@ -279,7 +279,6 @@
 //   }
 // }
 
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -496,21 +495,20 @@ import '../../../../../extensions/auth.dart';
 //   }
 // }
 
-
-
-class SignupFormPage extends StatefulWidget {
-  const SignupFormPage({super.key});
+class SignupForm extends StatefulWidget {
+  const SignupForm({super.key});
 
   @override
-  State<SignupFormPage> createState() => _SignupFormPageState();
+  State<SignupForm> createState() => _SignupFormState();
 }
 
-class _SignupFormPageState extends State<SignupFormPage> {
+class _SignupFormState extends State<SignupForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
   bool passToggle = true;
   bool confirmPassToggle = true;
 
@@ -595,11 +593,13 @@ class _SignupFormPageState extends State<SignupFormPage> {
                   child: ElevatedButton(
                     child: provider.loading
                         ? CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    )
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.white),
+                          )
                         : Text("Proceed", style: TextStyle(fontSize: fontSize)),
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
+                      padding:
+                          EdgeInsets.symmetric(vertical: screenHeight * 0.02),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(100),
                       ),
@@ -607,14 +607,14 @@ class _SignupFormPageState extends State<SignupFormPage> {
                     onPressed: provider.loading
                         ? null
                         : () {
-                      if (_formKey.currentState!.validate()) {
-                        provider.signupWithEmail(
-                          context: context,
-                          email: emailController.text.trim(),
-                          password: passwordController.text.trim(),
-                        );
-                      }
-                    },
+                            if (_formKey.currentState!.validate()) {
+                              provider.signupWithEmail(
+                                context: context,
+                                email: emailController.text.trim(),
+                                password: passwordController.text.trim(),
+                              );
+                            }
+                          },
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.02),
@@ -707,4 +707,3 @@ class _SignupFormPageState extends State<SignupFormPage> {
     );
   }
 }
-

@@ -130,8 +130,6 @@
 //   }
 // }
 
-
-
 // import 'package:bespoke_ai_job_app/features/registration/ui/pages/signUp/signUpForm_page.dart';
 // import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
@@ -270,13 +268,12 @@
 //   }
 // }
 
-
-import 'package:bespoke_ai_job_app/features/registration/ui/pages/signUp/signUpForm_page.dart';
+import 'package:bespoke_ai_job_app/features/registration/ui/pages/signup/sign_up_form.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../extensions/auth.dart';
-import '../signIn/signIn_page.dart';
+import '../signin/signIn_page.dart';
 
 class SignUpFormPage extends StatefulWidget {
   const SignUpFormPage({Key? key}) : super(key: key);
@@ -321,7 +318,7 @@ class _SignUpFormState extends State<SignUpFormPage> {
                 ),
               ),
               const SizedBox(height: 10),
-              SignupFormPage(),
+              SignupForm(),
               const SizedBox(height: 5),
               Row(
                 children: [
@@ -415,4 +412,3 @@ class _SignUpFormState extends State<SignUpFormPage> {
     );
   }
 }
-

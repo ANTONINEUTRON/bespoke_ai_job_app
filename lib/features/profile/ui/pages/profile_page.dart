@@ -7,7 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
-import '../../../registration/ui/pages/signIn/signIn_page.dart';
+import '../../../registration/ui/pages/signin/signIn_page.dart';
 import '../widgets/icon_widget.dart';
 import 'change_password_page.dart';
 
@@ -15,7 +15,7 @@ class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
@@ -25,12 +25,8 @@ class _ProfilePageState extends State<ProfilePage> {
   bool _isAdsOff = true;
   final ImagePicker _picker = ImagePicker();
 
-
   // Function to allow the user to pick and upload a new image
   Future<void> _updateProfilePicture() async {
-    // Show log to check if tap is detected
-    print("Avatar tapped");
-
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       try {
@@ -66,7 +62,6 @@ class _ProfilePageState extends State<ProfilePage> {
       print("No image selected");
     }
   }
-
 
   Future<void> _logout() async {
     try {
@@ -111,19 +106,22 @@ class _ProfilePageState extends State<ProfilePage> {
                 try {
                   await currentUser?.updateDisplayName(nameController.text);
                   setState(() {
-                    currentUser = FirebaseAuth.instance.currentUser; // Refresh currentUser
+                    currentUser = FirebaseAuth
+                        .instance.currentUser; // Refresh currentUser
                   });
 
                   Navigator.of(context).pop();
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                       backgroundColor: Colors.teal,
-                      content: Text('Profile successfully updated',
+                      content: Text(
+                        'Profile successfully updated',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           color: Colors.white,
-                        ),),
+                        ),
+                      ),
                       duration: Duration(seconds: 2),
                     ),
                   );
@@ -137,7 +135,6 @@ class _ProfilePageState extends State<ProfilePage> {
       },
     );
   }
-
 
   // Function to show delete account confirmation dialog
   Future<void> _showDeleteConfirmationDialog() async {
@@ -161,7 +158,8 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Cancel', style: TextStyle(fontSize: 16, color: Colors.white)),
+              child: const Text('Cancel',
+                  style: TextStyle(fontSize: 16, color: Colors.white)),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -205,7 +203,8 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder<User?>( // Listen for authentication state changes
+      body: StreamBuilder<User?>(
+        // Listen for authentication state changes
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -235,15 +234,16 @@ class _ProfilePageState extends State<ProfilePage> {
                                   child: CircleAvatar(
                                     radius: 38,
                                     backgroundColor: Colors.grey,
-                                    backgroundImage: currentUser?.photoURL != null
+                                    backgroundImage: currentUser?.photoURL !=
+                                            null
                                         ? NetworkImage(currentUser!.photoURL!)
                                         : null,
                                     child: currentUser?.photoURL == null
                                         ? Image.asset(
-                                      'assets/Vector.png',
-                                      width: 40,
-                                      height: 53,
-                                    )
+                                            'assets/Vector.png',
+                                            width: 40,
+                                            height: 53,
+                                          )
                                         : null,
                                   ),
                                 ),
@@ -303,32 +303,29 @@ class _ProfilePageState extends State<ProfilePage> {
                                 'Edit Username',
                                 _showEditProfileDialog,
                               ),
-
                               _buildDivider(),
                               _buildListTileWithSpacing(
-                               Icons.lock,
+                                Icons.lock,
                                 'Change password',
-                                    () {
+                                () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                      const ChangePasswordPage(),
+                                          const ChangePasswordPage(),
                                     ),
                                   );
                                 },
                               ),
-
                               _buildDivider(),
                               _buildListTileWithSpacing(
                                 Icons.help_outline,
                                 'Help center',
-                                    () {
+                                () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          HelpCenterPage(),
+                                      builder: (context) => HelpCenterPage(),
                                     ),
                                   );
                                 },
@@ -337,12 +334,11 @@ class _ProfilePageState extends State<ProfilePage> {
                               _buildListTileWithSpacing(
                                 Icons.thumb_up,
                                 'FeedBack',
-                                    () {
+                                () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          FeedbackPage(),
+                                      builder: (context) => FeedbackPage(),
                                     ),
                                   );
                                 },
@@ -351,7 +347,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               _buildListTileWithSpacing(
                                 Icons.security,
                                 'Terms and Conditions',
-                                    () {
+                                () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -363,7 +359,6 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                               _buildDivider(),
                               buildToggleAds(),
-
                               _buildDivider(),
                               _buildListTileWithSpacing(
                                 Icons.delete,
@@ -376,9 +371,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 Icons.logout,
                                 'Logout',
                                 _logout,
-                                trailing: SizedBox.shrink(), // This removes the trailing icon
+                                trailing: SizedBox
+                                    .shrink(), // This removes the trailing icon
                               ),
-
                             ],
                           ),
                         ),
@@ -400,7 +395,16 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("No user logged in."),
+                    Icon(
+                      Icons.person_remove,
+                      color: Theme.of(context).primaryColor,
+                      size: 200,
+                    ),
+                     Text(
+                      "You are not signed in!\nYou have to sign in to access certain features",
+                      style: TextStyle(color: Theme.of(context).primaryColor),
+                      textAlign: TextAlign.center,
+                    ),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.push(
@@ -409,7 +413,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               builder: (context) => const SignInPage()),
                         );
                       },
-                      child: const Text("Go to Sign In"),
+                      child: const Text("Sign in"),
                     ),
                   ],
                 ),
@@ -421,14 +425,18 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-
-
-
-  Widget _buildListTileWithSpacing(IconData icon, String title, VoidCallback onTap, {Widget? trailing,bool isDelete = false}) {
+  Widget _buildListTileWithSpacing(
+      IconData icon, String title, VoidCallback onTap,
+      {Widget? trailing, bool isDelete = false}) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
       child: ListTile(
-        trailing: trailing ?? Icon(Icons.arrow_forward_ios_outlined, size: 20,color: Colors.teal,),
+        trailing: trailing ??
+            Icon(
+              Icons.arrow_forward_ios_outlined,
+              size: 20,
+              color: Colors.teal,
+            ),
         leading: Container(
           padding: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
@@ -441,33 +449,34 @@ class _ProfilePageState extends State<ProfilePage> {
             color: Colors.white,
           ),
         ),
-        title: Text(title,style: TextStyle(
-          fontWeight: FontWeight.w500,
-          fontSize: 18,
-          color: Colors.black54,
-        ),),
+        title: Text(
+          title,
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 18,
+            color: Colors.black54,
+          ),
+        ),
         onTap: onTap,
       ),
     );
   }
 
   Widget buildToggleAds() => SwitchListTile(
-    title: Text(
-      _isAdsOff ? 'Ads On' : 'Ads Off',
-      style: TextStyle(color: _isAdsOff ? Colors.teal : Colors.black54),
-    ),
-    subtitle: Text(_isAdsOff ? 'Ads are on' : 'Ads are off'),
-    value: _isAdsOff,
-    activeColor: Colors.teal,
-    secondary: IconWidget(icon: Icons.ad_units, color: Colors.teal),
-    onChanged: (bool value) {
-      setState(() {
-        _isAdsOff = value;
-      });
-    },
-  );
-
-
+        title: Text(
+          _isAdsOff ? 'Ads On' : 'Ads Off',
+          style: TextStyle(color: _isAdsOff ? Colors.teal : Colors.black54),
+        ),
+        subtitle: Text(_isAdsOff ? 'Ads are on' : 'Ads are off'),
+        value: _isAdsOff,
+        activeColor: Colors.teal,
+        secondary: IconWidget(icon: Icons.ad_units, color: Colors.teal),
+        onChanged: (bool value) {
+          setState(() {
+            _isAdsOff = value;
+          });
+        },
+      );
 
   Widget _buildDivider() {
     return const Divider(
@@ -476,8 +485,3 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
-
-
-
-
-

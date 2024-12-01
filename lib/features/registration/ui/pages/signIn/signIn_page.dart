@@ -143,12 +143,12 @@
 
 
 
-import 'package:bespoke_ai_job_app/features/registration/ui/pages/signIn/signInForm_page.dart';
+import 'package:bespoke_ai_job_app/features/registration/ui/pages/signin/signInForm_page.dart';
+import 'package:bespoke_ai_job_app/features/registration/ui/pages/signup/sign_up_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../../../../extensions/auth.dart';
-import '../signUp/signUp_page.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});

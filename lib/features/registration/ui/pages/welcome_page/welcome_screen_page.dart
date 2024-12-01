@@ -4,10 +4,6 @@ import 'package:flutter/material.dart';
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
 
-  static route() => MaterialPageRoute(
-    builder: (context) => const HomePage(),
-  );
-
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
@@ -21,33 +17,37 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         height: MediaQuery.of(context).size.height,
         child: Stack(
           children: [
-            Stack(children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height/1.6,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height/1.6,
-                decoration: const BoxDecoration(
-                  color:Colors.teal,
-                  borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(70)),
-                ),
-                child: Center(
-                  child: Image.asset('assets/welimage.png',scale: 0.2,
+            Stack(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height / 1.6,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
                   ),
                 ),
-              )
-            ],),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height / 1.6,
+                  decoration: const BoxDecoration(
+                    color: Colors.teal,
+                    borderRadius:
+                        BorderRadius.only(bottomRight: Radius.circular(70)),
+                  ),
+                  child: Center(
+                    child: Image.asset(
+                      'assets/welimage.png',
+                      scale: 0.2,
+                    ),
+                  ),
+                )
+              ],
+            ),
             Align(
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height/2.666,
+                height: MediaQuery.of(context).size.height / 2.666,
                 decoration: BoxDecoration(
                   color: Colors.teal,
                 ),
@@ -57,18 +57,23 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               alignment: Alignment.bottomCenter,
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height/2.666,
-                padding: EdgeInsets.only(top: 20,bottom: 20),
+                height: MediaQuery.of(context).size.height / 2.666,
+                padding: EdgeInsets.only(
+                  top: 20,
+                  bottom: 20,
+                ),
                 decoration: BoxDecoration(
                   color: Color(0xFFFFFFFF),
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(70),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(70),
                   ),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
                     children: [
-                      Text("Empowering Your Career Journey",
+                      Text(
+                        "Empowering Your Career Journey",
                         style: TextStyle(
                           fontSize: 24.0,
                           fontWeight: FontWeight.w600,
@@ -87,19 +92,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       SizedBox(height: 30),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).push(WelcomeScreen.route());
+                          Navigator.of(context).push(HomePage.route());
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor:  Colors.teal,
-                          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 80),
+                          backgroundColor: Colors.teal,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: Text("Get Started",
+                        child: Text(
+                          "Get Started",
                           style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
                             color: Colors.white,
                           ),
                         ),

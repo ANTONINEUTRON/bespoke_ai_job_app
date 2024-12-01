@@ -16,18 +16,18 @@ class ResumePage extends StatelessWidget {
     List<ResumeModel> listOfResume = context.watch<ResumeBloc>().state.resumes;
 
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "Resume Upload",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-            color: Colors.white,
-          ),
-        ),
-        backgroundColor: Colors.teal,
-      ),
+      // appBar: AppBar(
+      //   centerTitle: true,
+      //   title: Text(
+      //     "Resume Upload",
+      //     style: TextStyle(
+      //       fontSize: 20,
+      //       fontWeight: FontWeight.w500,
+      //       color: Colors.white,
+      //     ),
+      //   ),
+      //   backgroundColor: Colors.teal,
+      // ),
       body: SafeArea(
         child: Container(
           width: double.infinity,
@@ -42,15 +42,12 @@ class ResumePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 40.h),
-                  child: Text(
-                    "Hello! You can access and manage your resume here...",
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black87,
-                    ),
+                Text(
+                  "Hello! \nAccess and manage your resume here...",
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black87,
                   ),
                 ),
                 SizedBox(height: 60.h),
@@ -58,16 +55,16 @@ class ResumePage extends StatelessWidget {
                   child: Center(
                     child: listOfResume.isNotEmpty
                         ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ...listOfResume.map(
-                              (resume) => UploadedResumeItem(
-                            resume: resume,
-                          ).addSpacing(bottom: 4.h),
-                        ),
-                      ],
-                    )
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              ...listOfResume.map(
+                                (resume) => UploadedResumeItem(
+                                  resume: resume,
+                                ).addSpacing(bottom: 4.h),
+                              ),
+                            ],
+                          )
                         : const SelectResumeWidget(),
                   ),
                 ),
@@ -80,25 +77,11 @@ class ResumePage extends StatelessWidget {
           ? null
           : FloatingActionButton.extended(
               onPressed: () {
-             UtilityFunctions.selectFile(context);
-            },
-           label: const Text("Add Resume"),
-            icon: const Icon(Icons.add),
-      ),
+                UtilityFunctions.selectFile(context);
+              },
+              label: const Text("Add Resume"),
+              icon: const Icon(Icons.add),
+            ),
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
